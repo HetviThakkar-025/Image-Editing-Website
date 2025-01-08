@@ -10,24 +10,43 @@
 </head>
 
 <body class="bg-slate-900">
-    <nav class="relative bg-gradient-to-r from-purple-700 to-purple-900 text-white">
+    <nav class="relative bg-gradient-to-r from-orange-950 via-orange-700 to-orange-900 text-white">
         <div class="container mx-auto flex justify-between items-center px-6 py-4">
-            <div class="text-2xl font-bold">Artistry</div>
-            <ul class="flex space-x-6 text-lg">
+
+            <div class="text-2xl font-bold flex-1 text-left">Manipix</div>
+
+            <!-- Hamburger Button (Visible on small screens) -->
+            <button id="hamburger" class="block md:hidden text-3xl">
+                &#9776;
+            </button>
+
+
+            <ul id="menu" class="hidden md:flex md:space-x-6 md:text-lg md:items-center md:justify-center flex-1">
                 <li><a href="#" class="hover:text-gray-300">Discover</a></li>
                 <li><a href="#" class="hover:text-gray-300">Create</a></li>
                 <li><a href="#" class="hover:text-gray-300">Learn</a></li>
                 <li><a href="#" class="hover:text-gray-300">Connect</a></li>
             </ul>
+
+            <!-- <div class="flex-1 text-right"></div> -->
         </div>
         <!-- Curved Bottom -->
-        <svg class="w-full h-10 -mt-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 80"
+        <svg class="hidden md:block w-full h-10 md:-mt-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 80"
             preserveAspectRatio="none">
-            <path fill="rgb(15, 23, 42)" d="M0,40 C480,80 960,0 1440,40 L1440,80 L0,80 Z"></path>
+            <path fill="rgb(15, 23, 42)" d="M0,40 C480,150 960,-50 1440,70 L1440,140 L0,90 Z"></path>
         </svg>
+
+        <hr class="md:hidden border-t border-gray-800">
     </nav>
 
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const menu = document.getElementById('menu');
 
+        hamburger.addEventListener('click', () => {
+            menu.classList.toggle('hidden'); // Toggles the visibility
+        });
+    </script>
 </body>
 
 </html>
