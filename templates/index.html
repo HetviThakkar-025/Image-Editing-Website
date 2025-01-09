@@ -10,18 +10,19 @@
 </head>
 
 <body class="bg-slate-900">
-    <nav class="relative bg-gradient-to-r from-orange-950 via-orange-700 to-orange-900 text-white">
+    <nav class="relative bg-gradient-to-r from-blue-600 to-green-700 text-white">
         <div class="container mx-auto flex justify-between items-center px-6 py-4">
 
-            <div class="text-2xl font-bold flex-1 text-left">Manipix</div>
+            <div class="text-3xl md:text-4xl font-bold text-left text-gray-900 md:ml-10 md:mt-0.5">Manipix</div>
 
             <!-- Hamburger Button (Visible on small screens) -->
-            <button id="hamburger" class="block md:hidden text-3xl">
+            <button id="hamburger" class="block md:hidden text-3xl text-gray-900">
                 &#9776;
             </button>
 
-
-            <ul id="menu" class="hidden md:flex md:space-x-6 md:text-lg md:items-center md:justify-center flex-1">
+            <!-- class="hidden flex-col space-y-4 text-2xl absolute top-full left-0 w-full bg-gradient-to-r from-blue-600 to-green-700 md:static md:flex md:space-x-10 md:text-2xl text-purple-950 font-semibold md:items-center md:justify-center md:flex-1" -->
+            <ul id="menu"
+                class="hidden text-2xl text-purple-950 font-semibold flex-col space-y-4 absolute top-full left-0 w-full bg-gradient-to-r from-blue-600 to-green-700 p-2 md:static md:flex md:flex-row md:space-y-0 md:space-x-10 md:bg-transparent md:from-transparent md:to-transparent md:flex-1 md:items-center md:justify-center">
                 <li><a href="#" class="hover:text-gray-300">Discover</a></li>
                 <li><a href="#" class="hover:text-gray-300">Create</a></li>
                 <li><a href="#" class="hover:text-gray-300">Learn</a></li>
