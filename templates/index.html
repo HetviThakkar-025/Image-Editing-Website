@@ -21,7 +21,7 @@
             <div class="text-3xl md:text-4xl font-bold text-left text-gray-900 md:ml-10 md:mt-0.5">Manipix</div>
 
             <!-- Hamburger Button (Visible on small screens) -->
-            <button id="hamburger" class="block md:hidden text-3xl text-gray-900">
+            <button id="hamburger" class="block md:hidden text-3xl text-gray-900 hover:text-white">
                 &#9776;
             </button>
 
@@ -45,10 +45,16 @@
         <hr class="md:hidden border-t border-gray-800">
     </nav>
 
+
+
     <div class="flex flex-col items-center justify-center min-h-screen">
+        <div class="w-5 h-5 bg-green-400 rounded-full mb-10 mr-96 opacity-30 animate-bounce"></div>
         <div class="text-center mb-60">
-            <h1 class="text-gray-200 text-5xl md:text-7xl font-bold mb-4 glow">TRANSFORM YOUR VISION</h1>
+            <h1 class="text-gray-200 text-5xl md:text-7xl font-bold mb-4 glow animate-pulse">TRANSFORM YOUR VISION</h1>
             <p class="text-blue-500 text-4xl md:text-6xl font-semibold">INTO REALITY</p>
+
+            <div class="w-10 h-10 bg-blue-400 opacity-30 mt-4 mr-96 animate-spin-slow">
+            </div>
 
             <div class="container flex flex-row items-center justify-center space-x-10 mt-20">
                 <svg width="60" height="60" xmlns="http://www.w3.org/2000/svg">
@@ -56,7 +62,7 @@
                 </svg>
 
                 <button
-                    class="px-20 py-4 text-lg bg-gradient-to-r from-green-400 to-blue-300 text-slate-950 font-bold rounded-full border border-transparent hover:text-white focus:outline-none">
+                    class="px-20 py-4 text-lg bg-gradient-to-r from-green-400 to-blue-300 text-slate-950 font-bold rounded-full border border-transparent hover:text-white shadow-lg hover:scale-105 hover:shadow-xl transition-all duration-300">
                     Start Creating
                 </button>
 
@@ -64,6 +70,7 @@
                     <circle cx="30" cy="30" r="30" class="fill-purple-400 animate-pulse " />
                 </svg>
             </div>
+            <hr class="w-50 mt-14 border-blue-400">
         </div>
     </div>
 
