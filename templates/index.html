@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manipix</title>
     <link href="/static/output.css" rel="stylesheet">
-    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
     <style>
         .glow {
             text-shadow: 0 3px #3d7bff, 0 0 3px #3d7bff, 0 0 7px #3d7bff, 0 0 5px #3d7bff;
@@ -15,17 +14,18 @@
 </head>
 
 <body class="bg-slate-900">
-    <nav class="relative bg-gradient-to-r from-blue-600 to-green-700 text-white">
-        <div class="container mx-auto flex justify-between items-center px-6 py-4">
 
+    <!-- NAVBAR -->
+    <nav class="relative bg-gradient-to-r from-blue-600 to-green-700 text-white">
+
+        <div class="container mx-auto flex justify-between items-center px-6 py-4">
             <div class="text-3xl md:text-4xl font-bold text-left text-gray-900 md:ml-10 md:mt-0.5">Manipix</div>
 
-            <!-- Hamburger Button (Visible on small screens) -->
+            <!-- Hamburger Button -->
             <button id="hamburger" class="block md:hidden text-3xl text-gray-900 hover:text-white">
                 &#9776;
             </button>
 
-            <!-- class="hidden flex-col space-y-4 text-2xl absolute top-full left-0 w-full bg-gradient-to-r from-blue-600 to-green-700 md:static md:flex md:space-x-10 md:text-2xl text-purple-950 font-semibold md:items-center md:justify-center md:flex-1" -->
             <ul id="menu"
                 class="hidden text-2xl text-purple-950 font-semibold flex-col space-y-4 absolute top-full left-0 w-full bg-gradient-to-r from-blue-600 to-green-700 p-2 md:static md:flex md:flex-row md:space-y-0 md:space-x-10 md:bg-transparent md:from-transparent md:to-transparent md:flex-1 md:items-center md:justify-center">
                 <li><a href="#" class="hover:text-gray-300">Discover</a></li>
@@ -33,32 +33,39 @@
                 <li><a href="#" class="hover:text-gray-300">Learn</a></li>
                 <li><a href="#" class="hover:text-gray-300">Connect</a></li>
             </ul>
-
-            <!-- <div class="flex-1 text-right"></div> -->
         </div>
-        <!-- Curved Bottom -->
+
         <svg class="hidden md:block w-full h-10 md:-mt-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 80"
             preserveAspectRatio="none">
             <path fill="rgb(15, 23, 42)" d="M0,40 C480,150 960,-50 1440,70 L1440,140 L0,90 Z"></path>
         </svg>
 
         <hr class="md:hidden border-t border-gray-800">
+
     </nav>
 
 
+    <!-- HOMEPAGE -->
+    <div id="content" class="flex flex-col items-center justify-center min-h-screen">
 
-    <div class="flex flex-col items-center justify-center min-h-screen">
-        <div class="w-5 h-5 bg-green-400 rounded-full mb-10 mr-96 opacity-30 animate-bounce"></div>
-        <div class="text-center mb-60">
+        <svg class="hidden md:block w-5 h-5 fill-green-400 opacity-30 animate-bounce mt-8 mb-6 mr-96"
+            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+            <circle cx="40" cy="40" r="30" />
+        </svg>
+
+        <div class="text-center md:mb-32">
+
             <h1 class="text-gray-200 text-5xl md:text-7xl font-bold mb-4 glow animate-pulse">TRANSFORM YOUR VISION</h1>
             <p class="text-blue-500 text-4xl md:text-6xl font-semibold">INTO REALITY</p>
 
-            <div class="w-10 h-10 bg-blue-400 opacity-30 mt-4 mr-96 animate-spin-slow">
-            </div>
+            <svg class="hidden md:block w-10 h-10 fill-blue-400 opacity-30 mr-96 mt-8 animate-spin-slow"
+                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+                <rect width="800" height="800" class="stroke-black stroke-2" />
+            </svg>
 
-            <div class="container flex flex-row items-center justify-center space-x-10 mt-20">
+            <div class="container flex flex-row items-center justify-center space-x-10 mt-28 md:mt-16">
                 <svg width="60" height="60" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="30" cy="30" r="30" class="fill-purple-700 animate-pulse" />
+                    <circle cx="30" cy="30" r="30" class="hidden md:block fill-purple-700 animate-pulse" />
                 </svg>
 
                 <button
@@ -67,17 +74,19 @@
                 </button>
 
                 <svg width="60" height="60" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="30" cy="30" r="30" class="fill-purple-400 animate-pulse " />
+                    <circle cx="30" cy="30" r="30" class="hidden md:block fill-purple-400 animate-pulse " />
                 </svg>
             </div>
+
             <hr class="w-50 mt-14 border-blue-400">
+
+            <svg class="hidden md:block w-10 h-10 fill-red-500 opacity-30 animate-bounce mt-10 mb-6 ml-[60rem]"
+                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 150">
+                <circle cx="70" cy="70" r="70" />
+            </svg>
+
         </div>
     </div>
-
-    <!-- <div class="container">
-
-    </div> -->
-
 
     <script>
         const hamburger = document.getElementById('hamburger');
@@ -85,8 +94,10 @@
 
         hamburger.addEventListener('click', () => {
             menu.classList.toggle('hidden'); // Toggles the visibility
+            content.classList.toggle('mt-20');
         });
     </script>
+
 </body>
 
 </html>
