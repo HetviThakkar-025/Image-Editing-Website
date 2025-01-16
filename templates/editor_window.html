@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editor Window</title>
+    <link href="/static/output.css" rel="stylesheet">
+</head>
+
+<body class="bg-slate-950">
+    <!-- NAVBAR -->
+    <nav class="relative w-full bg-slate-800 text-white">
+        <div class="container mx-auto flex justify-between items-center px-6 py-4">
+            <div
+                class="text-3xl md:text-4xl font-bold text-left bg-gradient-to-r from-teal-600 via-blue-400 to-purple-500 bg-clip-text text-transparent md:ml-10 md:mt-0.5">
+                Manipix</div>
+
+            <!-- Hamburger Button -->
+            <button id="hamburger" class="block md:hidden text-3xl text-gray-300 hover:text-gray-700">
+                &#9776;
+            </button>
+
+            <ul id="menu"
+                class="hidden text-2xl text-purple-950 font-semibold flex-col space-y-4 absolute top-full left-0 w-full bg-slate-900 p-2 md:static md:flex md:flex-row md:space-y-0 md:space-x-5 md:bg-transparent md:from-transparent md:to-transparent md:flex-1 md:items-end md:justify-end">
+                <li><button
+                        class="px-10 py-2 text-lg bg-gradient-to-r from-blue-600 to-cyan-400 text-slate-950 font-bold rounded-full border border-transparent hover:text-white shadow-lg hover:scale-105 hover:shadow-xl transition-all duration-300">Create</button>
+                </li>
+                <li><button
+                        class="px-10 py-2 text-lg bg-gradient-to-r from-blue-600 to-cyan-400 text-slate-950 font-bold rounded-full border border-transparent hover:text-white shadow-lg hover:scale-105 hover:shadow-xl transition-all duration-300">Explore</button>
+                </li>
+                <li><button
+                        class="px-10 py-2 text-lg bg-gradient-to-r from-blue-600 to-cyan-400 text-slate-950 font-bold rounded-full border border-transparent hover:text-white shadow-lg hover:scale-105 hover:shadow-xl transition-all duration-300">Plugins</button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+
+    <div class="flex flex-row mt-10 mb-10 gap-x-20 ml-7">
+        <!-- TOOLS SIDEBAR -->
+        <div class="bg-slate-800 text-white flex flex-col items-center gap-y-2 w-20">
+            <div class=""><button><img src="/static/images/blur.png" alt=""></button></div>
+            <div class=""><button><img src="/static/images/resize.png" alt=""></button></div>
+            <div class=""><button><img src="/static/images/blur.png" alt=""></button></div>
+            <div class=""><button><img src="/static/images/resize.png" alt=""></button></div>
+            <div class=""><button><img src="/static/images/blur.png" alt=""></button></div>
+            <div class=""><button><img src="/static/images/resize.png" alt=""></button></div>
+            <div class=""><button><img src="/static/images/blur.png" alt=""></button></div>
+            <div class=""><button><img src="/static/images/resize.png" alt=""></button></div>
+            <div class=""><button><img src="/static/images/blur.png" alt=""></button></div>
+            <div class=""><button><img src="/static/images/resize.png" alt=""></button></div>
+        </div>
+
+        <!-- UPLOAD IMAGE -->
+        <div class="bg-slate-800 w-[56rem] rounded-2xl">
+            <div class="bg-slate-700 mx-10 my-10 h-[35rem] border-4 border-dashed border-blue-700">
+                <form action="#" method="post" class="mx-64 my-64">
+                    <!-- <input type="file" name="image" id="" class="bg-blue-500 rounded-full"> -->
+                    <input type="file" class="block w-full text-md text-slate-950
+                    file:mr-4 file:py-3 file:px-5
+                    file:rounded-full file:border-0
+                    file:text-lg
+                    file:bg-gray-300 file:text-black file:font-semibold
+                    hover:file:text-blue-950
+                  " />
+                </form>
+            </div>
+        </div>
+
+        <div class="flex flex-col">
+            <!-- ADJUSTMENTS -->
+            <div class="bg-slate-800 w-72 h-96 rounded-2xl">
+                <p class="text-xl text-white text-center font-bold">ADJUSTMENTS</p>
+                <form action="#" method="post" class="flex flex-col items-center gap-y-8 mt-10">
+                    <div>
+                        <p class="text-gray-400 text-lg">Exposure</p>
+                        <input type="range" name="" id="">
+                    </div>
+
+                    <div>
+                        <p class="text-gray-400 text-lg">Exposure</p>
+                        <input type="range" name="" id="">
+                    </div>
+
+                    <div>
+                        <p class="text-gray-400 text-lg">Exposure</p>
+                        <input type="range" name="" id="">
+                    </div>
+                </form>
+            </div>
+
+            <!-- RESET/EXPORT -->
+            <div class="bg-slate-800 w-72 h-20 rounded-2xl mt-10">
+                <div class="flex flex-row gap-x-3 items-center justify-center my-4">
+                    <button
+                        class="bg-gray-600 rounded-full text-lg font-semibold text-white px-8 py-2 hover:bg-gradient-to-r from-teal-400 to-blue-500 hover:text-slate-900">Reset</button>
+                    <button
+                        class="bg-gray-600 rounded-full text-lg font-semibold text-white px-8 py-2 hover:bg-gradient-to-r from-teal-400 to-blue-500 hover:text-slate-900">Export</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const menu = document.getElementById('menu');
+
+        hamburger.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+    </script>
+
+</body>
+
+</html>
