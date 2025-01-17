@@ -37,25 +37,25 @@
     </nav>
 
 
-    <div class="flex flex-row mt-10 mb-10 gap-x-20 ml-7">
+    <div class="flex flex-col lg:flex-row mt-10 mb-10 gap-y-8 lg:gap-x-20 lg:ml-7">
         <!-- TOOLS SIDEBAR -->
-        <div class="bg-slate-800 text-white flex flex-col items-center gap-y-2 w-20">
-            <div class=""><button><img src="/static/images/blur.png" alt=""></button></div>
-            <div class=""><button><img src="/static/images/resize.png" alt=""></button></div>
-            <div class=""><button><img src="/static/images/blur.png" alt=""></button></div>
-            <div class=""><button><img src="/static/images/resize.png" alt=""></button></div>
-            <div class=""><button><img src="/static/images/blur.png" alt=""></button></div>
-            <div class=""><button><img src="/static/images/resize.png" alt=""></button></div>
-            <div class=""><button><img src="/static/images/blur.png" alt=""></button></div>
-            <div class=""><button><img src="/static/images/resize.png" alt=""></button></div>
-            <div class=""><button><img src="/static/images/blur.png" alt=""></button></div>
-            <div class=""><button><img src="/static/images/resize.png" alt=""></button></div>
+        <div class="bg-slate-800 text-white flex flex-row lg:flex-col lg:mb-0 items-center px-2 gap-x-3 lg:gap-y-4 lg:w-20 rounded-md lg:py-2 lg:px-0">
+            <button><img src="/static/images/blur.png" alt=""></button>
+            <button><img src="/static/images/resize.png" alt=""></button>
+            <button><img src="/static/images/blur.png" alt=""></button>
+            <button><img src="/static/images/resize.png" alt=""></button>
+            <button><img src="/static/images/blur.png" alt=""></button> 
+            <button><img src="/static/images/resize.png" alt=""></button>
+            <button><img src="/static/images/blur.png" alt=""></button>
+            <button><img src="/static/images/resize.png" alt=""></button>
+            <button><img src="/static/images/blur.png" alt=""></button>
+            <button><img src="/static/images/resize.png" alt=""></button>
         </div>
 
         <!-- UPLOAD IMAGE -->
-        <div class="bg-slate-800 w-[56rem] rounded-2xl">
-            <div class="bg-slate-700 mx-10 my-10 h-[35rem] border-4 border-dashed border-blue-700">
-                <form action="#" method="post" class="mx-64 my-64">
+        <div class="bg-slate-800 lg:w-[56rem] rounded-2xl">
+            <div class="bg-slate-700 mx-5 my-5 lg:mx-10 lg:my-10 h-96 lg:h-[35rem] border-4 border-dashed border-blue-700">
+                <form action="#" method="post" class="mx-24 my-36 lg:mx-64 lg:my-64">
                     <!-- <input type="file" name="image" id="" class="bg-blue-500 rounded-full"> -->
                     <input type="file" class="block w-full text-md text-slate-950
                     file:mr-4 file:py-3 file:px-5
@@ -68,10 +68,10 @@
             </div>
         </div>
 
-        <div class="flex flex-col">
+        <div class="flex flex-col justify-center items-center">
             <!-- ADJUSTMENTS -->
-            <div class="bg-slate-800 w-72 h-96 rounded-2xl">
-                <p class="text-xl text-white text-center font-bold">ADJUSTMENTS</p>
+            <div class="bg-slate-800 w-72 lg:h-96 rounded-2xl">
+                <p class="text-2xl text-white text-center font-bold">ADJUSTMENTS</p>
                 <form action="#" method="post" class="flex flex-col items-center gap-y-8 mt-10">
                     <div>
                         <p class="text-gray-400 text-lg">Exposure</p>
