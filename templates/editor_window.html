@@ -40,23 +40,26 @@
     <div class="flex flex-col lg:flex-row mt-10 mb-10 gap-y-8 lg:gap-x-20 lg:ml-7">
         <!-- TOOLS SIDEBAR -->
         <div
-            class="bg-slate-800 text-white flex flex-row lg:flex-col lg:mb-0 items-center px-2 gap-x-3 lg:gap-y-4 lg:w-20 rounded-md lg:py-2 lg:px-0">
-            <button><img src="/static/images/blur.png" alt="" id="resizeButtonToolbar">Resize</button>
-            <button><img src="/static/images/resize.png" alt="" id="blurTool">Blur</button>
-            <button><img src="/static/images/blur.png" alt=""></button>
-            <button><img src="/static/images/resize.png" alt=""></button>
-            <button><img src="/static/images/blur.png" alt=""></button>
-            <button><img src="/static/images/resize.png" alt=""></button>
-            <button><img src="/static/images/blur.png" alt=""></button>
-            <button><img src="/static/images/resize.png" alt=""></button>
-            <button><img src="/static/images/blur.png" alt=""></button>
-            <button><img src="/static/images/resize.png" alt=""></button>
+            class="bg-slate-800 text-white flex flex-row lg:flex-col lg:mb-0 items-center px-2 gap-x-3 lg:gap-y-4 lg:w-24 rounded-md lg:py-2 lg:px-5">
+            <button class="hover:bg-slate-700"><img src="/static/images/blur.png" alt=""
+                    id="resizeButtonToolbar">Resize</button>
+            <button class="hover:bg-slate-700"><img src="/static/images/resize.png" alt="" id="blurTool">Blur</button>
+            <button class="hover:bg-slate-700"><img src="/static/images/blur.png" alt="" id="flipTool">Flip</button>
+            <button class="hover:bg-slate-700"><img src="/static/images/resize.png" alt=""
+                    id="grayscale">Grayscale</button>
+            <button class="hover:bg-slate-700"><img src="/static/images/blur.png" alt="" id="rotate">Rotate</button>
+            <button class="hover:bg-slate-700"><img src="/static/images/resize.png" alt=""
+                    id="morphology">Morph</button>
+            <button class="hover:bg-slate-700"><img src="/static/images/blur.png" alt="" id="spaces">Spaces</button>
+            <button class="hover:bg-slate-700"><img src="/static/images/resize.png" alt=""
+                    id="translate">Translate</button>
+            <button class="hover:bg-slate-700"><img src="/static/images/blur.png" alt="">Histograms</button>
         </div>
 
         <!-- UPLOAD IMAGE -->
         <div class="bg-slate-800 lg:w-[56rem] rounded-2xl">
             <div
-                class="bg-slate-700 mx-5 my-5 lg:mx-10 lg:my-10 h-96 lg:h-[35rem] border-4 border-dashed border-blue-700 relative overflow-hidden">
+                class="bg-slate-700 mx-5 my-5 lg:mx-10 lg:my-10 h-96 lg:h-[38rem] border-4 border-dashed border-blue-700 relative overflow-hidden">
                 <form id="imageForm" enctype="multipart/form-data"
                     class="mx-24 my-36 lg:mx-64 lg:my-64 absolute inset-0 flex justify-center items-center">
                     <input type="file" id="imageInput" name="imageInput" accept="image/*" class="block w-full text-md text-slate-950
@@ -64,7 +67,7 @@
                     file:rounded-full file:border-0
                     file:text-lg
                     file:bg-gray-300 file:text-black file:font-semibold
-                    hover:file:text-blue-950
+                    hover:file:text-white hover:file:bg-blue-600
                   " />
 
                     <button type="submit" id="resizeButton" class="hidden"></button>
@@ -77,18 +80,90 @@
 
                 <!-- Resized Image Display Section -->
                 <div id="resizedImageContainer" class="absolute inset-0 hidden flex justify-center items-center">
-                    <!-- The resized image will be dynamically added here -->
                 </div>
             </div>
 
+            <!-- For resize -->
             <div id="resize-w-h" class="flex flex-col text-white justify-center items-center gap-y-3 mb-5 hidden">
                 <p class="font-semibold text-xl">Enter width and height to resize:</p>
                 <div class="flex flex-row gap-x-4">
                     <div>
-                        Width: <input type="number" name="" id="width" class="bg-slate-600 w-14 rounded-md">
+                        Width: <input type="number" id="width" class="bg-slate-600 w-14 rounded-md">
                     </div>
                     <div>
-                        Height: <input type="number" name="" id="height" class="bg-slate-600 w-14 rounded-md">
+                        Height: <input type="number" id="height" class="bg-slate-600 w-14 rounded-md">
+                    </div>
+                </div>
+            </div>
+
+            <!-- For flipping -->
+            <div id="flipping" class="flex flex-col text-white justify-center items-center gap-y-3 mb-5 hidden">
+                <p class="font-semibold text-xl">How to flip:</p>
+                <div class="flex flex-row gap-x-6">
+                    <div>
+                        <input type="radio" name="flip" id="vertical" value="0">
+                        <label for="vertical">Vertical</label>
+                    </div>
+                    <div>
+                        <input type="radio" name="flip" id="horizontal" value="1">
+                        <label for="horizontal">Horizontal</label>
+                    </div>
+                    <div>
+                        <input type="radio" name="flip" id="vh" value="-1">
+                        <label for="vh">Vertical & Horizontal</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- For rotate -->
+            <div id="rotate-a" class="flex flex-col text-white justify-center items-center gap-y-3 mb-5 hidden">
+                <p class="font-semibold text-xl">Enter angle to rotate:</p>
+                <div class="flex flex-row gap-x-4">
+                    <div>
+                        Angle: <input type="number" name="" id="angle" class="bg-slate-600 w-14 rounded-md">
+                    </div>
+                </div>
+            </div>
+
+            <!-- For morphology -->
+            <div id="morphology-d-e" class="flex flex-col text-white justify-center items-center gap-y-3 mb-5 hidden">
+                <p class="font-semibold text-xl">How to morph:</p>
+                <div class="flex flex-row gap-x-6">
+                    <div>
+                        <input type="radio" name="morph" id="dilate" value="dilate">
+                        <label for="dilate">Dilate</label>
+                    </div>
+                    <div>
+                        <input type="radio" name="morph" id="erode" value="erode">
+                        <label for="erode">Erode</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- For spaces -->
+            <div id="spaces-b-l" class="flex flex-col text-white justify-center items-center gap-y-3 mb-5 hidden">
+                <p class="font-semibold text-xl">How to convert your BGR image:</p>
+                <div class="flex flex-row gap-x-6">
+                    <div>
+                        <input type="radio" name="space" id="hsv" value="hsv">
+                        <label for="hsv">To HSV</label>
+                    </div>
+                    <div>
+                        <input type="radio" name="space" id="lab" value="lab">
+                        <label for="lab">To LAB</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- For resize -->
+            <div id="translate-x-y" class="flex flex-col text-white justify-center items-center gap-y-3 mb-5 hidden">
+                <p class="font-semibold text-xl">Enter x and y values to translate:</p>
+                <div class="flex flex-row gap-x-4">
+                    <div>
+                        X-axis: <input type="number" name="" id="x" class="bg-slate-600 w-14 rounded-md">
+                    </div>
+                    <div>
+                        Y-axis: <input type="number" name="" id="y" class="bg-slate-600 w-14 rounded-md">
                     </div>
                 </div>
             </div>
