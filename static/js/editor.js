@@ -10,9 +10,7 @@ hamburger.addEventListener('click', () => {
 const imageInput = document.getElementById('imageInput');
 const previewContainer = document.getElementById('previewContainer');
 const previewImage = document.getElementById('previewImage');
-const resizeButtonToolbar = document.getElementById('resizeButtonToolbar');
 const form = document.getElementById('imageForm');
-const resizeButton = document.getElementById('resizeButton');
 
 // preview image
 imageInput.addEventListener('change', (event) => {
@@ -31,6 +29,7 @@ imageInput.addEventListener('change', (event) => {
     }
 });
 
+// MAIN FUNCTION
 async function submitImageForm(endpoint, additionalData = {}) {
     const fileInput = document.getElementById("imageInput");
     const file = fileInput.files[0];
@@ -60,7 +59,7 @@ async function submitImageForm(endpoint, additionalData = {}) {
         }
 
         const data = await response.json();
-        console.log("Server response:", data); 
+        console.log("Server response:", data);
 
         if (data.filtered_image) {
             const imageContainer = document.getElementById("resizedImageContainer");
@@ -74,7 +73,7 @@ async function submitImageForm(endpoint, additionalData = {}) {
             imageContainer.innerHTML = ""; // Clear previous content
             imageContainer.appendChild(img);
             imageContainer.classList.remove("hidden");
-
+            form.classList.add("hidden");
             previewContainer.classList.add("hidden");
         } else {
             alert("Failed to retrieve image.");
@@ -88,6 +87,8 @@ async function submitImageForm(endpoint, additionalData = {}) {
 
 // RESIZE
 let hasClickedOnce = false;
+const resizeButtonToolbar = document.getElementById('resizeButtonToolbar');
+const resizeButton = document.getElementById('resizeButton');
 
 resizeButtonToolbar.addEventListener("click", async (event) => {
     event.preventDefault();
@@ -112,4 +113,32 @@ resizeButtonToolbar.addEventListener("click", async (event) => {
     };
 
     submitImageForm("http://127.0.0.1:5000/resize", additionalData);
+});
+
+// BLUR
+const blurTool = document.getElementById('blurTool');
+
+blurTool.addEventListener("click", async (event) => {
+    event.preventDefault();
+
+    // if (!hasClickedOnce) {
+    //     document.getElementById("resize-w-h").classList.remove('hidden');
+    //     hasClickedOnce = true;
+    //     return;
+    // }
+
+    // const widthValue = document.getElementById('width').value;
+    // const heightValue = document.getElementById('height').value;
+
+    // if (!widthValue || !heightValue) {
+    //     alert("Please specify both width and height.");
+    //     return;
+    // }
+
+    // const additionalData = {
+    //     width: widthValue,
+    //     height: heightValue
+    // };
+
+    submitImageForm("http://127.0.0.1:5000/blur", null);
 });
