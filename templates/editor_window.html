@@ -57,7 +57,7 @@
         <div class="bg-slate-800 lg:w-[56rem] rounded-2xl">
             <div
                 class="bg-slate-700 mx-5 my-5 lg:mx-10 lg:my-10 h-96 lg:h-[35rem] border-4 border-dashed border-blue-700 relative overflow-hidden">
-                <form action="/" method="POST" id="imageForm" enctype="multipart/form-data"
+                <form id="imageForm" enctype="multipart/form-data"
                     class="mx-24 my-36 lg:mx-64 lg:my-64 absolute inset-0 flex justify-center items-center">
                     <input type="file" id="imageInput" name="imageInput" accept="image/*" class="block w-full text-md text-slate-950
                     file:mr-4 file:py-3 file:px-5
@@ -66,7 +66,7 @@
                     file:bg-gray-300 file:text-black file:font-semibold
                     hover:file:text-blue-950
                   " />
-                    <p id="myP">Hello World</p>
+
                     <button type="submit" id="resizeButton" class="hidden"></button>
                 </form>
 
@@ -75,13 +75,11 @@
                     <img id="previewImage" class="max-w-full max-h-full object-contain" alt="Uploaded Image Preview" />
                 </div>
 
-                <!-- Display Resized Image -->
-                {% if img_data %}
-                <div class="absolute inset-0 flex justify-center items-center">
-                    <img src="data:image/jpeg;base64,{{ img_data|b64encode }}" alt="Resized Image"
-                        class="max-w-full max-h-full object-contain" />
+                <!-- Resized Image Display Section -->
+                <div id="resizedImageContainer" class="absolute inset-0 hidden flex justify-center items-center">
+                    <!-- The resized image will be dynamically added here -->
                 </div>
-                {% endif %}
+
 
             </div>
         </div>
@@ -120,53 +118,7 @@
         </div>
     </div>
 
-    <script>
-        const hamburger = document.getElementById('hamburger');
-        const menu = document.getElementById('menu');
-
-        hamburger.addEventListener('click', () => {
-            menu.classList.toggle('hidden');
-        });
-
-
-        const imageInput = document.getElementById('imageInput');
-        const previewContainer = document.getElementById('previewContainer');
-        const previewImage = document.getElementById('previewImage');
-        const resizeButtonToolbar = document.getElementById('resizeButtonToolbar');
-        const form = document.getElementById('imageForm');
-        const resizeButton = document.getElementById('resizeButton');
-
-        imageInput.addEventListener('change', (event) => {
-            const file = event.target.files[0]; // Get the selected file
-            if (file) {
-                const reader = new FileReader();
-
-                // When file is loaded
-                reader.onload = (e) => {
-                    previewImage.src = e.target.result; // Set the image source to the file content
-                    previewContainer.classList.remove('hidden'); // Show the preview container
-                };
-
-                reader.readAsDataURL(file); // Read the file content
-            } else {
-                previewContainer.classList.add('hidden'); // Hide the preview container if no file is selected
-            }
-        });
-
-        resizeButtonToolbar.addEventListener('click', (event) => {
-            console.log('resize of toolbar')
-            event.preventDefault(); // Prevent default behavior of the button
-            resizeButton.click(); // Trigger the hidden submit button
-        });
-
-        // Handle form submission for resizing
-        resizeButton.addEventListener('click', (event) => {
-            console.log('resize of form')
-            event.preventDefault();
-            form.submit(); // Submit the form to process the image
-        });
-    </script>
-
+    <script src="/static/js/editor.js"></script>
 </body>
 
 </html>
