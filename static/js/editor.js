@@ -31,51 +31,85 @@ imageInput.addEventListener('change', (event) => {
     }
 });
 
-resizeButtonToolbar.addEventListener("click", async (event) => {
-    event.preventDefault();
-
+async function submitImageForm(endpoint, additionalData = {}) {
     const fileInput = document.getElementById("imageInput");
     const file = fileInput.files[0];
 
     if (!file) {
-        alert("Please select an image to resize.");
+        alert("Please select an image.");
         return;
     }
 
     const formData = new FormData();
     formData.append("imageInput", file);
 
+    for (const key in additionalData) {
+        if (additionalData.hasOwnProperty(key)) {
+            formData.append(key, additionalData[key]);
+        }
+    }
+
     try {
-        const response = await fetch("http://127.0.0.1:5000/resize", {
+        const response = await fetch(endpoint, {
             method: "POST",
             body: formData,
         });
 
         if (!response.ok) {
-            throw new Error("Failed to resize the image.");
+            throw new Error("Request failed.");
         }
 
-        const data = await response.json(); 
+        const data = await response.json();
+        console.log("Server response:", data); 
 
-        if (data.resized_image) {
-            const resizedImageContainer = document.getElementById("resizedImageContainer");
+        if (data.filtered_image) {
+            const imageContainer = document.getElementById("resizedImageContainer");
             const previewContainer = document.getElementById("previewContainer");
 
             const img = document.createElement("img");
-            img.src = `data:image/jpeg;base64,${data.resized_image}`;
-            img.alt = "Resized Image";
+            img.src = `data:image/jpeg;base64,${data.filtered_image}`;
+            img.alt = "Processed Image";
             img.className = "max-w-full max-h-full object-contain";
 
-            resizedImageContainer.innerHTML = ""; // Clear previous content
-            resizedImageContainer.appendChild(img);
-            resizedImageContainer.classList.remove("hidden");
+            imageContainer.innerHTML = ""; // Clear previous content
+            imageContainer.appendChild(img);
+            imageContainer.classList.remove("hidden");
 
             previewContainer.classList.add("hidden");
         } else {
-            alert("Failed to retrieve resized image.");
+            alert("Failed to retrieve image.");
         }
     } catch (error) {
         console.error("Error:", error);
-        alert("An error occurred while resizing the image.");
+        alert("An error occurred while processing the image.");
     }
+}
+
+
+// RESIZE
+let hasClickedOnce = false;
+
+resizeButtonToolbar.addEventListener("click", async (event) => {
+    event.preventDefault();
+
+    if (!hasClickedOnce) {
+        document.getElementById("resize-w-h").classList.remove('hidden');
+        hasClickedOnce = true;
+        return;
+    }
+
+    const widthValue = document.getElementById('width').value;
+    const heightValue = document.getElementById('height').value;
+
+    if (!widthValue || !heightValue) {
+        alert("Please specify both width and height.");
+        return;
+    }
+
+    const additionalData = {
+        width: widthValue,
+        height: heightValue
+    };
+
+    submitImageForm("http://127.0.0.1:5000/resize", additionalData);
 });

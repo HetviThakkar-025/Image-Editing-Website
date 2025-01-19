@@ -20,6 +20,12 @@ def resize():
         try:
             img_file = request.files.get("imageInput")
 
+            try:
+                width = int(request.form.get("width"))
+                height = int(request.form.get("height"))
+            except ValueError:
+                return jsonify({"error": "Invalid width or height"}), 400
+
             if not img_file:
                 raise ValueError("No file uploaded")
 
@@ -34,13 +40,13 @@ def resize():
             if img is None:
                 return jsonify({"error": "Invalid image file"}), 400
 
-            newimg = resize_img(img)
+            newimg = resize_img(img, width, height)
 
             _, img_encoded = cv.imencode('.jpg', newimg)
             img_bytes = img_encoded.tobytes()
 
             img_base64 = base64.b64encode(img_bytes).decode("utf-8")
-            return jsonify({"resized_image": img_base64}), 200
+            return jsonify({"filtered_image": img_base64}), 200
 
         except Exception as e:
             print(f"Error: {e}")
@@ -49,8 +55,8 @@ def resize():
     return render_template("editor_window.html")
 
 
-def resize_img(img):
-    resize = cv.resize(img, (300, 300), interpolation=cv.INTER_CUBIC)
+def resize_img(img, w, h):
+    resize = cv.resize(img, (w, h), interpolation=cv.INTER_CUBIC)
     return resize
 
 
@@ -62,6 +68,7 @@ def b64encode_filter(data):
         # Convert bytes to Base64 string
         return base64.b64encode(data).decode('utf-8')
     raise ValueError("Input to b64encode must be bytes")
+
 
 if __name__ == "__main__":
     app.run(debug=True)
