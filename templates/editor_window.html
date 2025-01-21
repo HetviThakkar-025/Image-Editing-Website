@@ -37,23 +37,28 @@
     </nav>
 
 
-    <div class="flex flex-col lg:flex-row mt-10 mb-10 gap-y-8 lg:gap-x-20 lg:ml-7">
+    <div class="flex flex-col lg:flex-row mt-10 mb-10 gap-y-8 lg:gap-x-16 lg:ml-7">
         <!-- TOOLS SIDEBAR -->
         <div
-            class="bg-slate-800 text-white flex flex-row lg:flex-col lg:mb-0 items-center px-2 gap-x-3 lg:gap-y-4 lg:w-24 rounded-md lg:py-2 lg:px-5">
-            <button class="hover:bg-slate-700"><img src="/static/images/blur.png" alt=""
+            class="bg-slate-800 text-white flex flex-row lg:flex-col lg:mb-3 items-center px-2 gap-x-3 lg:gap-y-4 lg:w-24 rounded-md lg:py-2 lg:px-0">
+            <button class="hover:bg-slate-700 text-sm font-semibold"><img src="/static/images/blurrrr.png " alt=""
                     id="resizeButtonToolbar">Resize</button>
-            <button class="hover:bg-slate-700"><img src="/static/images/resize.png" alt="" id="blurTool">Blur</button>
-            <button class="hover:bg-slate-700"><img src="/static/images/blur.png" alt="" id="flipTool">Flip</button>
-            <button class="hover:bg-slate-700"><img src="/static/images/resize.png" alt=""
-                    id="grayscale">Grayscale</button>
-            <button class="hover:bg-slate-700"><img src="/static/images/blur.png" alt="" id="rotate">Rotate</button>
-            <button class="hover:bg-slate-700"><img src="/static/images/resize.png" alt=""
+            <button class="hover:bg-slate-700 text-sm font-semibold"><img src="/static/images/blurrrr.png" alt=""
+                    id="blurTool">Blur</button>
+            <button class="hover:bg-slate-700 text-sm font-semibold"><img src="/static/images/blurrrr.png" alt=""
+                    id="flipTool">Flip</button>
+            <button class="hover:bg-slate-700 text-sm font-semibold"><img src="/static/images/blurrrr.png" alt=""
+                    id="grayscale">Gray</button>
+            <button class="hover:bg-slate-700 text-sm font-semibold"><img src="/static/images/blurrrr.png" alt=""
+                    id="rotate">Rotate</button>
+            <button class="hover:bg-slate-700 text-sm font-semibold"><img src="/static/images/blurrrr.png" alt=""
                     id="morphology">Morph</button>
-            <button class="hover:bg-slate-700"><img src="/static/images/blur.png" alt="" id="spaces">Spaces</button>
-            <button class="hover:bg-slate-700"><img src="/static/images/resize.png" alt=""
+            <button class="hover:bg-slate-700 text-sm font-semibold"><img src="/static/images/blurrrr.png" alt=""
+                    id="spaces">Spaces</button>
+            <button class="hover:bg-slate-700 text-sm font-semibold"><img src="/static/images/blurrrr.png" alt=""
                     id="translate">Translate</button>
-            <button class="hover:bg-slate-700"><img src="/static/images/blur.png" alt="">Histograms</button>
+            <button class="hover:bg-slate-700 text-sm font-semibold"><img src="/static/images/blurrrr.png"
+                    alt="">Graph</button>
         </div>
 
         <!-- UPLOAD IMAGE -->
@@ -82,117 +87,105 @@
                 <div id="resizedImageContainer" class="absolute inset-0 hidden flex justify-center items-center">
                 </div>
             </div>
-
-            <!-- For resize -->
-            <div id="resize-w-h" class="flex flex-col text-white justify-center items-center gap-y-3 mb-5 hidden">
-                <p class="font-semibold text-xl">Enter width and height to resize:</p>
-                <div class="flex flex-row gap-x-4">
-                    <div>
-                        Width: <input type="number" id="width" class="bg-slate-600 w-14 rounded-md">
-                    </div>
-                    <div>
-                        Height: <input type="number" id="height" class="bg-slate-600 w-14 rounded-md">
-                    </div>
-                </div>
-            </div>
-
-            <!-- For flipping -->
-            <div id="flipping" class="flex flex-col text-white justify-center items-center gap-y-3 mb-5 hidden">
-                <p class="font-semibold text-xl">How to flip:</p>
-                <div class="flex flex-row gap-x-6">
-                    <div>
-                        <input type="radio" name="flip" id="vertical" value="0">
-                        <label for="vertical">Vertical</label>
-                    </div>
-                    <div>
-                        <input type="radio" name="flip" id="horizontal" value="1">
-                        <label for="horizontal">Horizontal</label>
-                    </div>
-                    <div>
-                        <input type="radio" name="flip" id="vh" value="-1">
-                        <label for="vh">Vertical & Horizontal</label>
-                    </div>
-                </div>
-            </div>
-
-            <!-- For rotate -->
-            <div id="rotate-a" class="flex flex-col text-white justify-center items-center gap-y-3 mb-5 hidden">
-                <p class="font-semibold text-xl">Enter angle to rotate:</p>
-                <div class="flex flex-row gap-x-4">
-                    <div>
-                        Angle: <input type="number" name="" id="angle" class="bg-slate-600 w-14 rounded-md">
-                    </div>
-                </div>
-            </div>
-
-            <!-- For morphology -->
-            <div id="morphology-d-e" class="flex flex-col text-white justify-center items-center gap-y-3 mb-5 hidden">
-                <p class="font-semibold text-xl">How to morph:</p>
-                <div class="flex flex-row gap-x-6">
-                    <div>
-                        <input type="radio" name="morph" id="dilate" value="dilate">
-                        <label for="dilate">Dilate</label>
-                    </div>
-                    <div>
-                        <input type="radio" name="morph" id="erode" value="erode">
-                        <label for="erode">Erode</label>
-                    </div>
-                </div>
-            </div>
-
-            <!-- For spaces -->
-            <div id="spaces-b-l" class="flex flex-col text-white justify-center items-center gap-y-3 mb-5 hidden">
-                <p class="font-semibold text-xl">How to convert your BGR image:</p>
-                <div class="flex flex-row gap-x-6">
-                    <div>
-                        <input type="radio" name="space" id="hsv" value="hsv">
-                        <label for="hsv">To HSV</label>
-                    </div>
-                    <div>
-                        <input type="radio" name="space" id="lab" value="lab">
-                        <label for="lab">To LAB</label>
-                    </div>
-                </div>
-            </div>
-
-            <!-- For resize -->
-            <div id="translate-x-y" class="flex flex-col text-white justify-center items-center gap-y-3 mb-5 hidden">
-                <p class="font-semibold text-xl">Enter x and y values to translate:</p>
-                <div class="flex flex-row gap-x-4">
-                    <div>
-                        X-axis: <input type="number" name="" id="x" class="bg-slate-600 w-14 rounded-md">
-                    </div>
-                    <div>
-                        Y-axis: <input type="number" name="" id="y" class="bg-slate-600 w-14 rounded-md">
-                    </div>
-                </div>
-            </div>
         </div>
 
-        <div class="flex flex-col justify-center items-center">
+        <div class="flex flex-col justify-center items-center mb-30">
             <!-- ADJUSTMENTS -->
-            <div class="bg-slate-800 w-72 lg:h-96 rounded-2xl">
-                <p class="text-2xl text-white text-center font-bold">ADJUSTMENTS</p>
-                <form action="#" method="post" class="flex flex-col items-center gap-y-8 mt-10">
-                    <div>
-                        <p class="text-gray-400 text-lg">Exposure</p>
-                        <input type="range" name="" id="">
-                    </div>
+            <div class="bg-slate-800 w-72 lg:h-64 rounded-2xl flex-col gap-y-4">
 
-                    <div>
-                        <p class="text-gray-400 text-lg">Exposure</p>
-                        <input type="range" name="" id="">
-                    </div>
+                <p class="text-2xl text-gray-300 text-center font-bold mb-8 mt-6">ADJUSTMENTS</p>
 
-                    <div>
-                        <p class="text-gray-400 text-lg">Exposure</p>
-                        <input type="range" name="" id="">
+                <!-- For resize -->
+                <div id="resize-w-h" class="flex flex-col text-white justify-center items-center gap-y-6 mb-5 hidden">
+                    <p class="font-semibold text-xl">Enter width and height to resize:</p>
+                    <div class="flex flex-row gap-x-4">
+                        <div>
+                            Width: <input type="number" id="width" class="bg-slate-600 w-14 rounded-md">
+                        </div>
+                        <div>
+                            Height: <input type="number" id="height" class="bg-slate-600 w-14 rounded-md">
+                        </div>
                     </div>
-                </form>
+                </div>
+
+                <!-- For flipping -->
+                <div id="flipping" class="flex flex-col text-white justify-center items-center gap-y-6 mb-5 hidden">
+                    <p class="font-semibold text-xl underline">How to flip:</p>
+                    <div class="flex flex-col gap-y-1">
+                        <div>
+                            <input type="radio" name="flip" id="vertical" value="0">
+                            <label for="vertical">Vertical</label>
+                        </div>
+                        <div>
+                            <input type="radio" name="flip" id="horizontal" value="1">
+                            <label for="horizontal">Horizontal</label>
+                        </div>
+                        <div>
+                            <input type="radio" name="flip" id="vh" value="-1">
+                            <label for="vh">Vertical & Horizontal</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- For rotate -->
+                <div id="rotate-a" class="flex flex-col text-white justify-center items-center gap-y-3 mb-5 hidden">
+                    <p class="font-semibold text-xl mb-3">Enter angle to rotate:</p>
+                    <div class="flex flex-row gap-x-4">
+                        <div>
+                            -360 <input type="range" id="rotate-s" min="-360" max="360" step="20" value="-100" class="mb-7">360
+                            <p>Selected Value: <span id="rangeValue">-100</span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- For morphology -->
+                <div id="morphology-d-e"
+                    class="flex flex-col text-white justify-center items-center gap-y-3 mb-5 hidden">
+                    <p class="font-semibold text-xl">How to morph:</p>
+                    <div class="flex flex-row gap-x-6">
+                        <div>
+                            <input type="radio" name="morph" id="dilate" value="dilate">
+                            <label for="dilate">Dilate</label>
+                        </div>
+                        <div>
+                            <input type="radio" name="morph" id="erode" value="erode">
+                            <label for="erode">Erode</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- For spaces -->
+                <div id="spaces-b-l" class="flex flex-col text-white justify-center items-center gap-y-3 mb-5 hidden">
+                    <p class="font-semibold text-xl">How to convert your BGR image:</p>
+                    <div class="flex flex-row gap-x-6">
+                        <div>
+                            <input type="radio" name="space" id="hsv" value="hsv">
+                            <label for="hsv">To HSV</label>
+                        </div>
+                        <div>
+                            <input type="radio" name="space" id="lab" value="lab">
+                            <label for="lab">To LAB</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- For translate -->
+                <div id="translate-x-y"
+                    class="flex flex-col text-white justify-center items-center gap-y-3 mb-5 hidden">
+                    <p class="font-semibold text-xl">Enter x and y values to translate:</p>
+                    <div class="flex flex-row gap-x-4">
+                        <div>
+                            X-axis: <input type="number" name="" id="x" class="bg-slate-600 w-14 rounded-md">
+                        </div>
+                        <div>
+                            Y-axis: <input type="number" name="" id="y" class="bg-slate-600 w-14 rounded-md">
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- RESET/EXPORT -->
-            <div class="bg-slate-800 w-72 h-20 rounded-2xl mt-10">
+            <div class="bg-slate-800 w-72 h-20 rounded-2xl mt-8">
                 <div class="flex flex-row gap-x-3 items-center justify-center my-4">
                     <button
                         class="bg-gray-600 rounded-full text-lg font-semibold text-white px-8 py-2 hover:bg-gradient-to-r from-teal-400 to-blue-500 hover:text-slate-900">Reset</button>
@@ -206,4 +199,4 @@
     <script src="/static/js/editor.js"></script>
 </body>
 
-</html>
+</html>">

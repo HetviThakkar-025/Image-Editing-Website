@@ -37,7 +37,7 @@ async function submitImageForm(endpoint, additionalData = {}) {
     const file = fileInput.files[0];
 
     if (!file) {
-        alert("Please select an image.");
+        alert("Please select an image");
         return;
     }
 
@@ -94,9 +94,21 @@ const resizeButton = document.getElementById('resizeButton');
 
 resizeButtonToolbar.addEventListener("click", async (event) => {
     event.preventDefault();
+    const fileInput = document.getElementById("imageInput");
+    const file = fileInput.files[0];
+
+    if (!file) {
+        alert("Please select an image");
+        return;
+    }
 
     if (!hasClickedOnce) {
         document.getElementById("resize-w-h").classList.remove('hidden');
+        document.getElementById("flipping").classList.add('hidden');
+        document.getElementById("rotate-a").classList.add('hidden');
+        document.getElementById("spaces-b-l").classList.add('hidden');
+        document.getElementById("translate-x-y").classList.add('hidden');
+        document.getElementById("morphology-d-e").classList.add('hidden');
         hasClickedOnce = true;
         return;
     }
@@ -131,9 +143,21 @@ const flipTool = document.getElementById('flipTool');
 
 flipTool.addEventListener("click", async (event) => {
     event.preventDefault();
+    const fileInput = document.getElementById("imageInput");
+    const file = fileInput.files[0];
+
+    if (!file) {
+        alert("Please select an image");
+        return;
+    }
 
     if (!hasClickedOnce) {
         document.getElementById("flipping").classList.remove('hidden');
+        document.getElementById("resize-w-h").classList.add('hidden');
+        document.getElementById("rotate-a").classList.add('hidden');
+        document.getElementById("spaces-b-l").classList.add('hidden');
+        document.getElementById("translate-x-y").classList.add('hidden');
+        document.getElementById("morphology-d-e").classList.add('hidden');
         hasClickedOnce = true;
         return;
     }
@@ -163,21 +187,41 @@ gray.addEventListener("click", async (event) => {
 // ROTATE
 const rotate = document.getElementById('rotate');
 
+const rangeInput = document.getElementById('rotate-s');
+const rangeValue = document.getElementById('rangeValue');
+
+// Update displayed value when the range slider is changed
+rangeInput.addEventListener('input', () => {
+    rangeValue.textContent = rangeInput.value;
+});
+
 rotate.addEventListener("click", async (event) => {
     event.preventDefault();
+    const fileInput = document.getElementById("imageInput");
+    const file = fileInput.files[0];
+
+    if (!file) {
+        alert("Please select an image");
+        return;
+    }
 
     if (!hasClickedOnce) {
         document.getElementById("rotate-a").classList.remove('hidden');
+        document.getElementById("resize-w-h").classList.add('hidden');
+        document.getElementById("flipping").classList.add('hidden');
+        document.getElementById("spaces-b-l").classList.add('hidden');
+        document.getElementById("translate-x-y").classList.add('hidden');
+        document.getElementById("morphology-d-e").classList.add('hidden');
         hasClickedOnce = true;
         return;
     }
 
-    const a = document.getElementById('angle').value;
+
+    const a = rangeInput.value;
 
     const additionalData = {
         angle: a
     };
-
 
     submitImageForm("http://127.0.0.1:5000/rotate", additionalData);
 });
@@ -188,9 +232,21 @@ const morphology = document.getElementById('morphology');
 
 morphology.addEventListener("click", async (event) => {
     event.preventDefault();
+    const fileInput = document.getElementById("imageInput");
+    const file = fileInput.files[0];
+
+    if (!file) {
+        alert("Please select an image");
+        return;
+    }
 
     if (!hasClickedOnce) {
         document.getElementById("morphology-d-e").classList.remove('hidden');
+        document.getElementById("resize-w-h").classList.add('hidden');
+        document.getElementById("flipping").classList.add('hidden');
+        document.getElementById("rotate-a").classList.add('hidden');
+        document.getElementById("spaces-b-l").classList.add('hidden');
+        document.getElementById("translate-x-y").classList.add('hidden');
         hasClickedOnce = true;
         return;
     }
@@ -212,9 +268,21 @@ const spaces = document.getElementById('spaces');
 
 spaces.addEventListener("click", async (event) => {
     event.preventDefault();
+    const fileInput = document.getElementById("imageInput");
+    const file = fileInput.files[0];
+
+    if (!file) {
+        alert("Please select an image");
+        return;
+    }
 
     if (!hasClickedOnce) {
         document.getElementById("spaces-b-l").classList.remove('hidden');
+        document.getElementById("resize-w-h").classList.add('hidden');
+        document.getElementById("flipping").classList.add('hidden');
+        document.getElementById("rotate-a").classList.add('hidden');
+        document.getElementById("translate-x-y").classList.add('hidden');
+        document.getElementById("morphology-d-e").classList.add('hidden');
         hasClickedOnce = true;
         return;
     }
@@ -234,9 +302,21 @@ const translate = document.getElementById('translate');
 
 translate.addEventListener("click", async (event) => {
     event.preventDefault();
+    const fileInput = document.getElementById("imageInput");
+    const file = fileInput.files[0];
+
+    if (!file) {
+        alert("Please select an image");
+        return;
+    }
 
     if (!hasClickedOnce) {
         document.getElementById("translate-x-y").classList.remove('hidden');
+        document.getElementById("resize-w-h").classList.addEventListener('hidden');
+        document.getElementById("flipping").classList.add('hidden');
+        document.getElementById("rotate-a").classList.add('hidden');
+        document.getElementById("spaces-b-l").classList.add('hidden');
+        document.getElementById("morphology-d-e").classList.add('hidden');
         hasClickedOnce = true;
         return;
     }
