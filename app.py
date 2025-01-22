@@ -63,6 +63,7 @@ def blur():
 
         try:
             img_file = request.files.get("imageInput")
+            ks = int(request.form.get("blurValue"))
 
             if not img_file:
                 raise ValueError("No file uploaded")
@@ -73,7 +74,7 @@ def blur():
             if img is None:
                 return jsonify({"error": "Invalid image file"}), 400
 
-            newimg = blur_img(img)
+            newimg = blur_img(img, ks)
 
             _, img_encoded = cv.imencode('.jpg', newimg)
             img_bytes = img_encoded.tobytes()
@@ -88,8 +89,8 @@ def blur():
     return render_template("editor_window.html")
 
 
-def blur_img(img):
-    blurred = cv.blur(img, (7, 7))
+def blur_img(img, ks):
+    blurred = cv.blur(img, (ks, ks))
     return blurred
 
 
@@ -347,11 +348,14 @@ def trans(img, x, y):
     dimensions = (img.shape[1], img.shape[0])
     return cv.warpAffine(img, transMat, dimensions)
 
+
 def translate_img(img, x, y):
     translated = trans(img, x, y)
     return translated
 
 # Define and register the b64encode filter
+
+
 @app.template_filter('b64encode')
 def b64encode_filter(data):
     if isinstance(data, bytes):  # Ensure input is bytes

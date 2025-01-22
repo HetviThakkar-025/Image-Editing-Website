@@ -104,6 +104,7 @@ resizeButtonToolbar.addEventListener("click", async (event) => {
 
     if (!hasClickedOnce) {
         document.getElementById("resize-w-h").classList.remove('hidden');
+        document.getElementById("adj-txt").classList.add('hidden');
         document.getElementById("flipping").classList.add('hidden');
         document.getElementById("rotate-a").classList.add('hidden');
         document.getElementById("spaces-b-l").classList.add('hidden');
@@ -132,10 +133,46 @@ resizeButtonToolbar.addEventListener("click", async (event) => {
 // BLUR
 const blurTool = document.getElementById('blurTool');
 
+const blurInput = document.getElementById('blur-slider');
+const blurValue = document.getElementById('blurValue');
+
+// Update displayed value when the range slider is changed
+blurInput.addEventListener('input', () => {
+    blurValue.textContent = blurInput.value;
+});
+
 blurTool.addEventListener("click", async (event) => {
     event.preventDefault();
 
-    submitImageForm("http://127.0.0.1:5000/blur", null);
+    const fileInput = document.getElementById("imageInput");
+    const file = fileInput.files[0];
+
+    if (!file) {
+        alert("Please select an image");
+        return;
+    }
+
+    if (!hasClickedOnce) {
+        document.getElementById("blur-img").classList.remove('hidden');
+        document.getElementById("rotate-a").classList.add('hidden');
+        document.getElementById("adj-txt").classList.add('hidden');
+        document.getElementById("resize-w-h").classList.add('hidden');
+        document.getElementById("flipping").classList.add('hidden');
+        document.getElementById("spaces-b-l").classList.add('hidden');
+        document.getElementById("translate-x-y").classList.add('hidden');
+        document.getElementById("morphology-d-e").classList.add('hidden');
+        hasClickedOnce = true;
+        return;
+    }
+
+
+    const b = blurInput.value;
+
+    const additionalData = {
+        blurValue: b
+    };
+
+    submitImageForm("http://127.0.0.1:5000/blur", additionalData);
 });
 
 // FLIP
@@ -154,6 +191,7 @@ flipTool.addEventListener("click", async (event) => {
     if (!hasClickedOnce) {
         document.getElementById("flipping").classList.remove('hidden');
         document.getElementById("resize-w-h").classList.add('hidden');
+        document.getElementById("adj-txt").classList.add('hidden');
         document.getElementById("rotate-a").classList.add('hidden');
         document.getElementById("spaces-b-l").classList.add('hidden');
         document.getElementById("translate-x-y").classList.add('hidden');
@@ -190,7 +228,6 @@ const rotate = document.getElementById('rotate');
 const rangeInput = document.getElementById('rotate-s');
 const rangeValue = document.getElementById('rangeValue');
 
-// Update displayed value when the range slider is changed
 rangeInput.addEventListener('input', () => {
     rangeValue.textContent = rangeInput.value;
 });
@@ -207,6 +244,7 @@ rotate.addEventListener("click", async (event) => {
 
     if (!hasClickedOnce) {
         document.getElementById("rotate-a").classList.remove('hidden');
+        document.getElementById("adj-txt").classList.add('hidden');
         document.getElementById("resize-w-h").classList.add('hidden');
         document.getElementById("flipping").classList.add('hidden');
         document.getElementById("spaces-b-l").classList.add('hidden');
@@ -243,6 +281,7 @@ morphology.addEventListener("click", async (event) => {
     if (!hasClickedOnce) {
         document.getElementById("morphology-d-e").classList.remove('hidden');
         document.getElementById("resize-w-h").classList.add('hidden');
+        document.getElementById("adj-txt").classList.add('hidden');
         document.getElementById("flipping").classList.add('hidden');
         document.getElementById("rotate-a").classList.add('hidden');
         document.getElementById("spaces-b-l").classList.add('hidden');
@@ -280,6 +319,7 @@ spaces.addEventListener("click", async (event) => {
         document.getElementById("spaces-b-l").classList.remove('hidden');
         document.getElementById("resize-w-h").classList.add('hidden');
         document.getElementById("flipping").classList.add('hidden');
+        document.getElementById("adj-txt").classList.add('hidden');
         document.getElementById("rotate-a").classList.add('hidden');
         document.getElementById("translate-x-y").classList.add('hidden');
         document.getElementById("morphology-d-e").classList.add('hidden');
@@ -312,6 +352,7 @@ translate.addEventListener("click", async (event) => {
 
     if (!hasClickedOnce) {
         document.getElementById("translate-x-y").classList.remove('hidden');
+        document.getElementById("adj-txt").classList.add('hidden');
         document.getElementById("resize-w-h").classList.addEventListener('hidden');
         document.getElementById("flipping").classList.add('hidden');
         document.getElementById("rotate-a").classList.add('hidden');

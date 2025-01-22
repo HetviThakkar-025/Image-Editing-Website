@@ -93,11 +93,12 @@
             <!-- ADJUSTMENTS -->
             <div class="bg-slate-800 w-72 lg:h-64 rounded-2xl flex-col gap-y-4">
 
-                <p class="text-2xl text-gray-300 text-center font-bold mb-8 mt-6">ADJUSTMENTS</p>
+                <p class="text-2xl text-gray-300 text-center font-bold mb-8 mt-6 underline">ADJUSTMENTS</p>
+                <p id="adj-txt" class="text-xl text-gray-600 font-bold mt-14 ml-12">USE ANY TOOL FOR ADJUSTMENTS</p>
 
                 <!-- For resize -->
                 <div id="resize-w-h" class="flex flex-col text-white justify-center items-center gap-y-6 mb-5 hidden">
-                    <p class="font-semibold text-xl">Enter width and height to resize:</p>
+                    <p class="font-semibold text-xl ml-5">Enter width and height to resize:</p>
                     <div class="flex flex-row gap-x-4">
                         <div>
                             Width: <input type="number" id="width" class="bg-slate-600 w-14 rounded-md">
@@ -108,9 +109,20 @@
                     </div>
                 </div>
 
+                <!-- For blur -->
+                <div id="blur-img" class="flex flex-col text-white justify-center items-center gap-y-6 mb-5 hidden">
+                    <p class="font-semibold text-xl ml-5">Enter width and height to resize:</p>
+                    <div class="flex flex-row gap-x-4">
+                        <div>
+                            1 <input type="range" id="blur-slider" min="1" max="51" step="2" value="7" class="mb-7"> 51
+                            <p>Selected Value: <span id="blurValue">7</span></p>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- For flipping -->
                 <div id="flipping" class="flex flex-col text-white justify-center items-center gap-y-6 mb-5 hidden">
-                    <p class="font-semibold text-xl underline">How to flip:</p>
+                    <p class="font-semibold text-xl">How to flip:</p>
                     <div class="flex flex-col gap-y-1">
                         <div>
                             <input type="radio" name="flip" id="vertical" value="0">
@@ -132,7 +144,8 @@
                     <p class="font-semibold text-xl mb-3">Enter angle to rotate:</p>
                     <div class="flex flex-row gap-x-4">
                         <div>
-                            -360 <input type="range" id="rotate-s" min="-360" max="360" step="20" value="-100" class="mb-7">360
+                            -360 <input type="range" id="rotate-s" min="-360" max="360" step="20" value="-100"
+                                class="mb-7">360
                             <p>Selected Value: <span id="rangeValue">-100</span></p>
                         </div>
                     </div>
