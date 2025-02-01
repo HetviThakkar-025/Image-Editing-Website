@@ -4,6 +4,7 @@ import cv2 as cv
 import numpy as np
 import base64
 
+
 app = Flask(__name__)
 CORS(app)
 

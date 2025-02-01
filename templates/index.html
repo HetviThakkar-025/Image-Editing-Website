@@ -7,14 +7,27 @@
     <title>Manipix</title>
     <link href="/static/output.css" rel="stylesheet">
     <style>
+        #particles-js {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
         .glow {
             text-shadow: 0 3px #3d7bff, 0 0 3px #3d7bff, 0 0 7px #3d7bff, 0 0 5px #3d7bff;
         }
     </style>
+
+    <!-- <script src="three.r134.min.js"></script>
+    <script src="vanta.net.min.js"></script> -->
+
 </head>
 
 <body class="bg-slate-900">
-
+    <div id="particles-js"></div>
     <!-- NAVBAR -->
     <nav class="fixed w-full z-50 bg-gradient-to-r from-blue-700 to-teal-500 text-white">
 
@@ -55,8 +68,8 @@
             <h1 class="text-gray-200 text-5xl md:text-7xl font-bold mb-4 glow animate-pulse">UNLEASH YOUR CREATIVITY
             </h1>
             <p class="text-blue-500 text-4xl md:text-6xl font-semibold mb-4">ONE PIXEL AT A TIME</p>
-            <p class="text-gray-400 text-4xl md:text-xl font-semibold">Empowering You to Manipulate and Enhance Every
-                Detail</p>
+            <p class="text-gray-400 text-4xl md:text-xl font-semibold">Empowering You to Manipulate and Enhance
+                Every Detail</p>
 
             <svg class="hidden md:block w-10 h-10 fill-cyan-500 opacity-30 mr-96 mt-8 animate-spin-slow"
                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
@@ -64,18 +77,18 @@
             </svg>
 
             <div class="container flex flex-row items-center justify-center space-x-10 mt-28 md:mt-16">
-                <svg width="60" height="60" xmlns="http://www.w3.org/2000/svg">
+                <!-- <svg width="60" height="60" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="30" cy="30" r="30" class="hidden md:block fill-purple-700 animate-pulse" />
-                </svg>
+                </svg> -->
 
                 <button
                     class="px-20 py-4 text-lg bg-gradient-to-r from-teal-400 to-blue-300 text-slate-950 font-bold rounded-full border border-transparent hover:text-white shadow-lg hover:scale-105 hover:shadow-xl transition-all duration-300">
                     Start Creating
                 </button>
 
-                <svg width="60" height="60" xmlns="http://www.w3.org/2000/svg">
+                <!-- <svg width="60" height="60" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="30" cy="30" r="30" class="hidden md:block fill-purple-400 animate-pulse " />
-                </svg>
+                </svg> -->
             </div>
 
             <hr class="hidden md:block w-50 mt-14 border-blue-400">
@@ -120,7 +133,8 @@
                     <div class="p-[5px] bg-gradient-to-r from-teal-500 via-blue-400 to-purple-500 rounded-lg">
                         <div
                             class="flex flex-col items-center justify-center w-30 h-24 sm:w-44 sm:h-32 md:w-72 md:h-56 bg-slate-800 rounded-lg gap-y-12">
-                            <p class="font-semibold text-xl sm:font-semibold sm:text-3xl md:font-bold md:text-4xl">Blur
+                            <p class="font-semibold text-xl sm:font-semibold sm:text-3xl md:font-bold md:text-4xl">
+                                Blur
                             </p>
                             <svg class="w-10 h-10 fill-cyan-500 sm:opacity-30 animate-pulse sm:animate-spin-slow"
                                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
@@ -140,7 +154,8 @@
                     <div class="p-[5px] bg-gradient-to-r from-teal-500 via-blue-400 to-purple-500 rounded-lg">
                         <div
                             class="flex flex-col items-center justify-center w-30 h-32 sm:w-44 sm:h-44 md:w-80 md:h-72 bg-slate-800 rounded-lg gap-y-12">
-                            <p class="font-semibold md:font-bold md:text-4xl sm:font-semibold text-xl sm:text-3xl">Flip
+                            <p class="font-semibold md:font-bold md:text-4xl sm:font-semibold text-xl sm:text-3xl">
+                                Flip
                             </p>
                             <svg class="w-10 h-10 text-pink-500 animate-flicker sm:opacity-30"
                                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
@@ -154,7 +169,6 @@
                         <div class="absolute left-1/2 top-6 -translate-x-1/2 w-2 h-2 bg-gray-700 rotate-45"></div>
                     </div>
                 </div>
-
             </div>
         </div>
 
@@ -281,7 +295,8 @@
                     <div class="p-[5px] bg-gradient-to-r from-teal-500 via-blue-400 to-purple-500 rounded-lg">
                         <div
                             class="flex flex-col items-center justify-center w-30 h-32 sm:w-44 sm:h-44 md:w-80 md:h-72 bg-slate-800 rounded-lg gap-y-12">
-                            <p class="font-semibold md:font-bold sm:font-semibold sm:text-3xl text-xl md:text-4xl">Graph
+                            <p class="font-semibold md:font-bold sm:font-semibold sm:text-3xl text-xl md:text-4xl">
+                                Graph
                             </p>
                             <svg class="w-10 h-10 text-pink-500 animate-flicker sm:opacity-30"
                                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
@@ -393,7 +408,31 @@
         </div>
     </footer>
 
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
     <script>
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 80, density: { enable: true, value_area: 800 } },
+                color: { value: '#ffffff' },
+                shape: { type: 'circle' },
+                opacity: { value: 0.1, random: true },
+                size: { value: 3, random: true },
+                line_linked: { enable: true, distance: 150, color: '#ffffff', opacity: 0.1, width: 1 },
+                move: { enable: true, speed: 2, direction: 'none', random: true, straight: false, out_mode: 'out' }
+            },
+            interactivity: {
+                detect_on: 'canvas',
+                events: {
+                    onhover: { enable: true, mode: 'repulse' },
+                    onclick: { enable: true, mode: 'push' },
+                    resize: true
+                }
+            },
+            retina_detect: true
+        });
+
         const hamburger = document.getElementById('hamburger');
         const menu = document.getElementById('menu');
 

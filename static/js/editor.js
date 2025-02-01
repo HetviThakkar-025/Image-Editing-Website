@@ -377,3 +377,12 @@ translate.addEventListener("click", async (event) => {
 
     submitImageForm("http://127.0.0.1:5000/translate", additionalData);
 });
+
+
+//LOGIN-SIGNUP
+login = document.getElementById("login-form")
+exportBtn = document.getElementById("export")
+
+exportBtn.addEventListener("click", async (event) => {
+    login.classList.remove('hidden');
+});
