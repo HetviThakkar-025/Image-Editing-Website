@@ -81,11 +81,12 @@
                     <circle cx="30" cy="30" r="30" class="hidden md:block fill-purple-700 animate-pulse" />
                 </svg> -->
 
-                <button
-                    class="px-20 py-4 text-lg bg-gradient-to-r from-teal-400 to-blue-300 text-slate-950 font-bold rounded-full border border-transparent hover:text-white shadow-lg hover:scale-105 hover:shadow-xl transition-all duration-300">
-                    Start Creating
-                </button>
-
+                <a href="{{ url_for('editor_window') }}">
+                    <button
+                        class="px-20 py-4 text-lg bg-gradient-to-r from-teal-400 to-blue-300 text-slate-950 font-bold rounded-full border border-transparent hover:text-white shadow-lg hover:scale-105 hover:shadow-xl transition-all duration-300">
+                        Start Creating
+                    </button>
+                </a>
                 <!-- <svg width="60" height="60" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="30" cy="30" r="30" class="hidden md:block fill-purple-400 animate-pulse " />
                 </svg> -->
@@ -420,7 +421,7 @@
                 color: { value: '#ffffff' },
                 shape: { type: 'circle' },
                 opacity: { value: 0.1, random: true },
-                size: { value: 3, random: true },
+                size: { value: 4, random: true },
                 line_linked: { enable: true, distance: 150, color: '#ffffff', opacity: 0.1, width: 1 },
                 move: { enable: true, speed: 2, direction: 'none', random: true, straight: false, out_mode: 'out' }
             },

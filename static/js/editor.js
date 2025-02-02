@@ -14,23 +14,6 @@ const form = document.getElementById('imageForm');
 
 let hasClickedOnce = false;
 
-// preview image
-imageInput.addEventListener('change', (event) => {
-    const file = event.target.files[0];
-    if (file) {
-        const reader = new FileReader();
-
-        reader.onload = (e) => {
-            previewImage.src = e.target.result;
-            previewContainer.classList.remove('hidden');
-        };
-
-        reader.readAsDataURL(file);
-    } else {
-        previewContainer.classList.add('hidden');
-    }
-});
-
 // MAIN FUNCTION
 async function submitImageForm(endpoint, additionalData = {}) {
     const fileInput = document.getElementById("imageInput");
@@ -86,6 +69,57 @@ async function submitImageForm(endpoint, additionalData = {}) {
         alert("An error occurred while processing the image.");
     }
 }
+
+//RESET
+
+const reset = document.getElementById('resetbtn');
+
+reset.addEventListener('click', () => {
+    const imageContainer = document.getElementById("previewContainer");
+    const resimageContainer = document.getElementById("resizedImageContainer");
+    const fileInput = document.getElementById("imageInput");
+
+    // Clear the displayed images
+    imageContainer.innerHTML = "";
+    resimageContainer.innerHTML = "";
+    fileInput.value = "";
+
+    // Manually trigger a change event to ensure the file input resets
+    const event = new Event('change', { bubbles: true });
+    fileInput.dispatchEvent(event);
+});
+
+// preview image
+imageInput.addEventListener('change', (event) => {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+
+        reader.onload = (e) => {
+            previewImage.src = e.target.result;
+            previewContainer.classList.remove('hidden');
+        };
+
+        reader.readAsDataURL(file);
+    } else {
+        previewContainer.classList.add('hidden');
+    }
+});
+
+// const reset = document.getElementById('resetbtn')
+
+// reset.addEventListener('click', (event) => {
+//     const imageContainer = document.getElementById("previewContainer");
+//     const resimageContainer = document.getElementById("resizedImageContainer");
+//     const fileInput = document.getElementById("imageInput");
+//     const file = fileInput.files[0];
+
+//     if (file) {
+//         imageContainer.innerHTML = "";
+//         resimageContainer.innerHTML = "";
+//         fileInput.value = "";
+//     }
+// });
 
 
 // RESIZE
@@ -384,9 +418,9 @@ login = document.getElementById("login-form")
 exportBtn = document.getElementById("export")
 loginBtn = document.getElementById("login-signup")
 
-exportBtn.addEventListener("click", async (event) => {
-    login.classList.remove('hidden');
-});
+// exportBtn.addEventListener("click", async (event) => {
+//     login.classList.remove('hidden');
+// });
 
 loginBtn.addEventListener("click", async (event) => {
     login.classList.remove('hidden');
@@ -396,3 +430,30 @@ function closeModal() {
     login.classList.add('hidden');
     document.getElementById('successModal').style.display = 'none';
 }
+
+exportBtn.addEventListener("click", async (event) => {
+    const response = await fetch('/check_login'); // Check user session
+    const result = await response.json();
+
+    if (!result.logged_in) {
+
+        alert("Please log in to export the filtered image.");
+        return;
+    }
+
+    // Request server to save and return image
+
+    const imgResponse = await fetch('/export_filtered_image');
+    if (imgResponse.ok) {
+        const blob = await imgResponse.blob();
+        alert('ok')
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = "filtered_image.png";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    } else {
+        alert("Failed to export image.");
+    }
+});

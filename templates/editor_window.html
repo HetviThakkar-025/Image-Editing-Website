@@ -41,23 +41,23 @@
         <!-- TOOLS SIDEBAR -->
         <div
             class="bg-slate-800 text-white flex flex-row lg:flex-col lg:mb-3 items-center px-2 gap-x-3 lg:gap-y-4 lg:w-24 rounded-md lg:py-2 lg:px-0">
-            <button class="hover:bg-slate-700 text-sm font-semibold"><img src="/static/images/blurrrr.png " alt=""
+            <button class="hover:bg-slate-700 text-sm font-semibold"><img src="/static/images/resize.png " alt=""
                     id="resizeButtonToolbar">Resize</button>
             <button class="hover:bg-slate-700 text-sm font-semibold"><img src="/static/images/blurrrr.png" alt=""
                     id="blurTool">Blur</button>
-            <button class="hover:bg-slate-700 text-sm font-semibold"><img src="/static/images/blurrrr.png" alt=""
+            <button class="hover:bg-slate-700 text-sm font-semibold"><img src="/static/images/vertical-flip.png" alt=""
                     id="flipTool">Flip</button>
-            <button class="hover:bg-slate-700 text-sm font-semibold"><img src="/static/images/blurrrr.png" alt=""
+            <button class="hover:bg-slate-700 text-sm font-semibold"><img src="/static/images/colors.png" alt=""
                     id="grayscale">Gray</button>
-            <button class="hover:bg-slate-700 text-sm font-semibold"><img src="/static/images/blurrrr.png" alt=""
+            <button class="hover:bg-slate-700 text-sm font-semibold"><img src="/static/images/rotation.png" alt=""
                     id="rotate">Rotate</button>
-            <button class="hover:bg-slate-700 text-sm font-semibold"><img src="/static/images/blurrrr.png" alt=""
+            <button class="hover:bg-slate-700 text-sm font-semibold"><img src="/static/images/morph.png" alt=""
                     id="morphology">Morph</button>
-            <button class="hover:bg-slate-700 text-sm font-semibold"><img src="/static/images/blurrrr.png" alt=""
+            <button class="hover:bg-slate-700 text-sm font-semibold"><img src="/static/images/rgb.png" alt=""
                     id="spaces">Spaces</button>
-            <button class="hover:bg-slate-700 text-sm font-semibold"><img src="/static/images/blurrrr.png" alt=""
+            <button class="hover:bg-slate-700 text-sm font-semibold"><img src="/static/images/translate.png" alt=""
                     id="translate">Translate</button>
-            <button class="hover:bg-slate-700 text-sm font-semibold"><img src="/static/images/blurrrr.png"
+            <button class="hover:bg-slate-700 text-sm font-semibold"><img src="/static/images/graph.png"
                     alt="">Graph</button>
         </div>
 
@@ -75,11 +75,11 @@
                     hover:file:text-white hover:file:bg-blue-600
                   " />
 
-                    <button type="submit" id="resizeButton" class="hidden"></button>
+                    <!-- <button type="submit" id="resizeButton" class="hidden"></button> -->
                 </form>
 
                 <!-- Preview Container -->
-                <div id="previewContainer" class="absolute inset-0 hidden justify-center items-center">
+                <div id="previewContainer" class="absolute inset-0 hidden flex justify-center items-center">
                     <img id="previewImage" class="max-w-full max-h-full object-contain" alt="Uploaded Image Preview" />
                 </div>
 
@@ -200,9 +200,9 @@
             <!-- RESET/EXPORT -->
             <div class="bg-slate-800 w-72 h-20 rounded-2xl mt-8">
                 <div class="flex flex-row gap-x-3 items-center justify-center my-4">
-                    <button
+                    <button id="resetbtn"
                         class="bg-gray-600 rounded-full text-lg font-semibold text-white px-8 py-2 hover:bg-gradient-to-r from-teal-400 to-blue-500 hover:text-slate-900">Reset</button>
-                    <a href="#login-form"><button id="export"
+                    <a href=""><button id="export"
                             class="bg-gray-600 rounded-full text-lg font-semibold text-white px-8 py-2 hover:bg-gradient-to-r from-teal-400 to-blue-500 hover:text-slate-900">Export</button></a>
                 </div>
             </div>
@@ -231,7 +231,7 @@
                                 </div>
 
                                 <div class="mt-0">
-                                    <form action="/login" method="POST">
+                                    <form action="/signup" method="POST">
 
                                         <div class="mt-5">
                                             <p class="font-semibold text-lg text-white">Email:</p>
@@ -252,7 +252,7 @@
                                         </div>
 
                                         <div class="mt-9 ml-[18rem] space-x-1">
-                                            <button type="button" id="loginbtn"
+                                            <button type="submit" id="loginbtn"
                                                 class="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-red-500 sm:ml-3 sm:w-auto">Login</button>
                                             <button type="submit" id="signupbtn"
                                                 class="mt-3 inline-flex w-full justify-center rounded-md bg-yellow-400 px-3 py-2 text-sm font-semibold text-black ring-1 shadow-xs ring-gray-300 ring-inset hover:bg-yellow-300 sm:mt-0 sm:w-auto">Signup</button>

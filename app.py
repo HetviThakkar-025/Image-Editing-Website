@@ -1,4 +1,5 @@
-from flask import Flask, flash, render_template, request, redirect, jsonify, url_for
+import os
+from flask import Flask, flash, render_template, request, redirect, jsonify, send_file, session, url_for
 from flask_cors import CORS
 import cv2 as cv
 import numpy as np
@@ -9,6 +10,7 @@ from datetime import datetime
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'users1234'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///images.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 CORS(app)
@@ -22,15 +24,30 @@ class users(db.Model):
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
 
 
-@app.route("/login", methods=['POST'])
-def login():
+class Image(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    filename = db.Column(db.String(200), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.sno'), nullable=False)
+    uploaded_at = db.Column(db.DateTime, default=datetime.utcnow)
+    user = db.relationship('users', backref=db.backref('images', lazy=True))
+
+
+@app.route("/signup", methods=['POST'])
+def signup():
     if request.method == 'POST':
         uname = request.form['uname']
         userpass = request.form['pass']
-        user = users(username=uname, password=userpass)
-        db.session.add(user)
-        db.session.commit()
-        flash("Account created successfully!", "success")
+
+        user = users.query.filter_by(username=uname, password=userpass).first()
+
+        if not user:
+            user = users(username=uname, password=userpass)
+            db.session.add(user)
+            db.session.commit()
+            flash("Account created successfully!", "success")
+
+        session['username'] = user.username
+        flash("Verified!", "success")
 
     return render_template("editor_window.html")
 
@@ -43,6 +60,65 @@ def main_func():
 @app.route("/editor_window", methods=['GET'])
 def editor_window():
     return render_template("editor_window.html")
+
+
+@app.route('/check_login')
+def check_login():
+    if 'username' in session:
+        print(session)
+        return jsonify({'logged_in': True})
+
+    return jsonify({'logged_in': False})
+
+
+@app.route('/export_filtered_image', methods=['GET'])
+def export_filtered_image():
+   
+    # Ensure the user is logged in
+    if 'username' not in session:
+        return jsonify({'error': 'Unauthorized'}), 401
+
+    # Ensure that there is a filtered image in the session
+    if 'filtered_image' not in session:
+        return jsonify({'error': 'No filtered image available'}), 400
+
+    try:
+        print('hiiiiii')
+        # Retrieve the filtered image from the session (Base64)
+        img_base64 = session['filtered_image']
+
+        # Decode the Base64 image
+        img_bytes = base64.b64decode(img_base64)
+
+        # Get the user from the session
+        user = users.query.filter_by(username=session['username']).first()
+        if not user:
+            return jsonify({'error': 'User not found'}), 404
+
+        # Store the image in the database (with a unique filename)
+        
+        image_entry = Image(
+            filename=f"{user.username}_filtered.png", user_id=user.sno)
+        db.session.add(image_entry)
+        db.session.commit()
+
+        # Define the image path to save it for download
+        image_path = os.path.join('static', 'filtered_images',
+                                  f"{user.username}_filtered.png")
+
+        # Make sure the directory exists
+        os.makedirs(os.path.dirname(image_path), exist_ok=True)
+
+        # Save the image to the file system
+        with open(image_path, 'wb') as f:
+            f.write(img_bytes)
+
+        # Serve the image file for download
+        return send_file(image_path, as_attachment=True, download_name=f"{user.username}_filtered.png")
+
+    except Exception as e:
+        print(f"Error during export: {e}")
+        return jsonify({'error': 'An error occurred during export'}), 500
 
 
 # RESIZE
@@ -74,6 +150,10 @@ def resize():
             img_bytes = img_encoded.tobytes()
 
             img_base64 = base64.b64encode(img_bytes).decode("utf-8")
+
+            session['filtered_image'] = img_base64
+            session['function'] = "resize"
+
             return jsonify({"filtered_image": img_base64}), 200
 
         except Exception as e:
@@ -187,6 +267,10 @@ def gray():
             img_bytes = img_encoded.tobytes()
 
             img_base64 = base64.b64encode(img_bytes).decode("utf-8")
+
+            session['filtered_image'] = img_base64
+            session['function'] = "gray"
+
             return jsonify({"filtered_image": img_base64}), 200
 
         except Exception as e:
