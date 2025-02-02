@@ -1,16 +1,47 @@
-from flask import Flask, render_template, request, redirect, jsonify
+from flask import Flask, flash, render_template, request, redirect, jsonify, url_for
 from flask_cors import CORS
 import cv2 as cv
 import numpy as np
 import base64
-
+from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'users1234'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
 CORS(app)
 
 
-@app.route("/", methods=['GET', 'POST'])
+class users(db.Model):
+    sno = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(200), nullable=False)
+    password = db.Column(db.String(500), nullable=False)
+    image_filename = db.Column(db.String(200))
+    date_created = db.Column(db.DateTime, default=datetime.utcnow)
+
+
+@app.route("/login", methods=['POST'])
+def login():
+    if request.method == 'POST':
+        uname = request.form['uname']
+        userpass = request.form['pass']
+        user = users(username=uname, password=userpass)
+        db.session.add(user)
+        db.session.commit()
+        flash("Account created successfully!", "success")
+
+    return render_template("editor_window.html")
+
+
+@app.route("/", methods=['GET'])
 def main_func():
+    return render_template("index.html")
+
+
+@app.route("/editor_window", methods=['GET'])
+def editor_window():
     return render_template("editor_window.html")
 
 

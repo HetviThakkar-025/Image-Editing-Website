@@ -382,7 +382,17 @@ translate.addEventListener("click", async (event) => {
 //LOGIN-SIGNUP
 login = document.getElementById("login-form")
 exportBtn = document.getElementById("export")
+loginBtn = document.getElementById("login-signup")
 
 exportBtn.addEventListener("click", async (event) => {
     login.classList.remove('hidden');
 });
+
+loginBtn.addEventListener("click", async (event) => {
+    login.classList.remove('hidden');
+});
+
+function closeModal() {
+    login.classList.add('hidden');
+    document.getElementById('successModal').style.display = 'none';
+}
