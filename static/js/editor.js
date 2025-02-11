@@ -413,6 +413,35 @@ translate.addEventListener("click", async (event) => {
 });
 
 
+// HISTOGRAM
+const hist = document.getElementById('graph');
+
+hist.addEventListener("click", async (event) => {
+    event.preventDefault();
+    const fileInput = document.getElementById("imageInput");
+    const file = fileInput.files[0];
+
+    if (!file) {
+        alert("Please select an image");
+        return;
+    }
+
+    if (!hasClickedOnce) {
+        document.getElementById("morphology-d-e").classList.add('hidden');
+        document.getElementById("resize-w-h").classList.add('hidden');
+        document.getElementById("adj-txt").classList.remove('hidden');
+        document.getElementById("flipping").classList.add('hidden');
+        document.getElementById("rotate-a").classList.add('hidden');
+        document.getElementById("spaces-b-l").classList.add('hidden');
+        document.getElementById("translate-x-y").classList.add('hidden');
+        hasClickedOnce = true;
+        return;
+    }
+
+    submitImageForm("http://127.0.0.1:5000/histogram", null);
+});
+
+
 //LOGIN-SIGNUP
 login = document.getElementById("login-form")
 exportBtn = document.getElementById("export")

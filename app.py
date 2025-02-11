@@ -1,3 +1,4 @@
+from io import BytesIO
 import os
 from flask import Flask, flash, render_template, request, redirect, jsonify, send_file, session, url_for
 from flask_cors import CORS
@@ -6,6 +7,7 @@ import numpy as np
 import base64
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+import matplotlib.pyplot as plt
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'users1234'
@@ -73,7 +75,7 @@ def check_login():
 
 @app.route('/export_filtered_image', methods=['GET'])
 def export_filtered_image():
-   
+
     # Ensure the user is logged in
     if 'username' not in session:
         return jsonify({'error': 'Unauthorized'}), 401
@@ -96,7 +98,7 @@ def export_filtered_image():
             return jsonify({'error': 'User not found'}), 404
 
         # Store the image in the database (with a unique filename)
-        
+
         image_entry = Image(
             filename=f"{user.username}_filtered.png", user_id=user.sno)
         db.session.add(image_entry)
@@ -470,6 +472,70 @@ def translate_img(img, x, y):
     return translated
 
 # Define and register the b64encode filter
+
+
+@app.route("/histogram", methods=['POST'])
+def histogram():
+    if request.method == 'POST':
+        try:
+            img_file = request.files.get("imageInput")
+            if not img_file:
+                return jsonify({"error": "No file uploaded"}), 400
+
+            # Convert image file to numpy array
+            img_array = np.frombuffer(img_file.read(), np.uint8)
+            img = cv.imdecode(img_array, cv.IMREAD_COLOR)
+
+            if img is None:
+                return jsonify({"error": "Invalid image file"}), 400
+
+            # Generate the histogram image
+            hist_img = generate_histogram(img)
+
+            # Encode the image in Base64
+            _, img_encoded = cv.imencode('.png', hist_img)
+            img_bytes = img_encoded.tobytes()
+            img_base64 = base64.b64encode(img_bytes).decode("utf-8")
+
+            # Store the image in session (optional)
+            session['filtered_image'] = img_base64
+            session['function'] = "histogram"
+
+            return jsonify({"filtered_image": img_base64}), 200
+
+        except Exception as e:
+            print(f"Error: {e}")
+            return jsonify({"error": f"An error occurred: {str(e)}"}), 500
+
+    return render_template("editor_window.html")
+
+
+def generate_histogram(img):
+    """ Generate an RGB histogram and return it as an image array """
+    plt.figure(figsize=(6, 4))
+    plt.title("Color Histogram")
+    plt.xlabel("Bins")
+    plt.ylabel("# of Pixels")
+    colors = ('b', 'g', 'r')
+
+    for i, col in enumerate(colors):
+        hist = cv.calcHist([img], [i], None, [256], [0, 256])
+        plt.plot(hist, color=col)
+        plt.xlim([0, 256])
+
+    plt.tight_layout()
+
+    # Convert the plot to an image
+    buffer = BytesIO()
+    plt.savefig(buffer, format="png", bbox_inches="tight")
+    plt.close()  # Close the figure to free memory
+    buffer.seek(0)
+
+    # Convert to numpy array
+    hist_img = np.frombuffer(buffer.getvalue(), dtype=np.uint8)
+    hist_img = cv.imdecode(hist_img, cv.IMREAD_COLOR)
+
+    return hist_img
 
 
 @app.template_filter('b64encode')
