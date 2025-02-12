@@ -11,8 +11,11 @@ const imageInput = document.getElementById('imageInput');
 const previewContainer = document.getElementById('previewContainer');
 const previewImage = document.getElementById('previewImage');
 const form = document.getElementById('imageForm');
+const applybtn = document.getElementById('applybtn');
 
 let hasClickedOnce = false;
+let currentSubmissionFunction = null;
+let currentAdditionalData = null;
 
 // MAIN FUNCTION
 async function submitImageForm(endpoint, additionalData = {}) {
@@ -121,6 +124,13 @@ imageInput.addEventListener('change', (event) => {
 //     }
 // });
 
+applybtn.addEventListener("click", () => {
+    if (currentSubmissionFunction) {
+        currentSubmissionFunction();
+    } else {
+        alert("Please select a tool first.");
+    }
+});
 
 // RESIZE
 const resizeButtonToolbar = document.getElementById('resizeButtonToolbar');
@@ -139,29 +149,29 @@ resizeButtonToolbar.addEventListener("click", async (event) => {
     if (!hasClickedOnce) {
         document.getElementById("resize-w-h").classList.remove('hidden');
         document.getElementById("adj-txt").classList.add('hidden');
+        document.getElementById("applybtn").classList.remove('hidden');
+        document.getElementById("applybtn").classList.add('mt-5');
         document.getElementById("flipping").classList.add('hidden');
         document.getElementById("rotate-a").classList.add('hidden');
         document.getElementById("spaces-b-l").classList.add('hidden');
         document.getElementById("translate-x-y").classList.add('hidden');
         document.getElementById("morphology-d-e").classList.add('hidden');
+        document.getElementById("blur-img").classList.add('hidden');
         hasClickedOnce = true;
-        return;
     }
 
-    const widthValue = document.getElementById('width').value;
-    const heightValue = document.getElementById('height').value;
+    currentSubmissionFunction = () => {
+        const widthValue = document.getElementById('width').value;
+        const heightValue = document.getElementById('height').value;
 
-    if (!widthValue || !heightValue) {
-        alert("Please specify both width and height.");
-        return;
-    }
+        if (!widthValue || !heightValue) {
+            alert("Please specify both width and height.");
+            return;
+        }
 
-    const additionalData = {
-        width: widthValue,
-        height: heightValue
+        const additionalData = { width: widthValue, height: heightValue };
+        submitImageForm("http://127.0.0.1:5000/resize", additionalData);
     };
-
-    submitImageForm("http://127.0.0.1:5000/resize", additionalData);
 });
 
 // BLUR
@@ -188,6 +198,7 @@ blurTool.addEventListener("click", async (event) => {
 
     if (!hasClickedOnce) {
         document.getElementById("blur-img").classList.remove('hidden');
+        document.getElementById("applybtn").classList.remove('hidden');
         document.getElementById("rotate-a").classList.add('hidden');
         document.getElementById("adj-txt").classList.add('hidden');
         document.getElementById("resize-w-h").classList.add('hidden');
@@ -196,17 +207,17 @@ blurTool.addEventListener("click", async (event) => {
         document.getElementById("translate-x-y").classList.add('hidden');
         document.getElementById("morphology-d-e").classList.add('hidden');
         hasClickedOnce = true;
-        return;
     }
 
+    currentSubmissionFunction = () => {
+        const b = blurInput.value;
 
-    const b = blurInput.value;
+        const additionalData = {
+            blurValue: b
+        };
 
-    const additionalData = {
-        blurValue: b
+        submitImageForm("http://127.0.0.1:5000/blur", additionalData);
     };
-
-    submitImageForm("http://127.0.0.1:5000/blur", additionalData);
 });
 
 // FLIP
@@ -224,25 +235,28 @@ flipTool.addEventListener("click", async (event) => {
 
     if (!hasClickedOnce) {
         document.getElementById("flipping").classList.remove('hidden');
+        document.getElementById("applybtn").classList.remove('hidden');
         document.getElementById("resize-w-h").classList.add('hidden');
+        document.getElementById("blur-img").classList.add('hidden');
         document.getElementById("adj-txt").classList.add('hidden');
         document.getElementById("rotate-a").classList.add('hidden');
         document.getElementById("spaces-b-l").classList.add('hidden');
         document.getElementById("translate-x-y").classList.add('hidden');
         document.getElementById("morphology-d-e").classList.add('hidden');
         hasClickedOnce = true;
-        return;
     }
 
-    const selectedRadio = document.querySelector('input[name="flip"]:checked');
-    const flipValue = selectedRadio ? selectedRadio.value : null;
+    currentSubmissionFunction = () => {
+        const selectedRadio = document.querySelector('input[name="flip"]:checked');
+        const flipValue = selectedRadio ? selectedRadio.value : null;
 
-    const additionalData = {
-        flip: flipValue
-    };
+        const additionalData = {
+            flip: flipValue
+        };
 
-    console.log("Submitting with flip value:", flipValue);
-    submitImageForm("http://127.0.0.1:5000/flip", additionalData);
+        console.log("Submitting with flip value:", flipValue);
+        submitImageForm("http://127.0.0.1:5000/flip", additionalData);
+    }
 });
 
 
@@ -278,24 +292,27 @@ rotate.addEventListener("click", async (event) => {
 
     if (!hasClickedOnce) {
         document.getElementById("rotate-a").classList.remove('hidden');
+        document.getElementById("applybtn").classList.remove('hidden');
+        document.getElementById("applybtn").classList.add('mt-5');
         document.getElementById("adj-txt").classList.add('hidden');
         document.getElementById("resize-w-h").classList.add('hidden');
+        document.getElementById("blur-img").classList.add('hidden');
         document.getElementById("flipping").classList.add('hidden');
         document.getElementById("spaces-b-l").classList.add('hidden');
         document.getElementById("translate-x-y").classList.add('hidden');
         document.getElementById("morphology-d-e").classList.add('hidden');
         hasClickedOnce = true;
-        return;
     }
 
+    currentSubmissionFunction = () => {
+        const a = rangeInput.value;
 
-    const a = rangeInput.value;
+        const additionalData = {
+            angle: a
+        };
 
-    const additionalData = {
-        angle: a
-    };
-
-    submitImageForm("http://127.0.0.1:5000/rotate", additionalData);
+        submitImageForm("http://127.0.0.1:5000/rotate", additionalData);
+    }
 });
 
 
@@ -314,25 +331,29 @@ morphology.addEventListener("click", async (event) => {
 
     if (!hasClickedOnce) {
         document.getElementById("morphology-d-e").classList.remove('hidden');
+        document.getElementById("applybtn").classList.remove('hidden');
+        document.getElementById("applybtn").classList.add('mt-5');
         document.getElementById("resize-w-h").classList.add('hidden');
+        document.getElementById("blur-img").classList.add('hidden');
         document.getElementById("adj-txt").classList.add('hidden');
         document.getElementById("flipping").classList.add('hidden');
         document.getElementById("rotate-a").classList.add('hidden');
         document.getElementById("spaces-b-l").classList.add('hidden');
         document.getElementById("translate-x-y").classList.add('hidden');
         hasClickedOnce = true;
-        return;
     }
 
-    const selectedRadio = document.querySelector('input[name="morph"]:checked');
-    const morphValue = selectedRadio ? selectedRadio.value : null;
+    currentSubmissionFunction = () => {
+        const selectedRadio = document.querySelector('input[name="morph"]:checked');
+        const morphValue = selectedRadio ? selectedRadio.value : null;
 
-    const additionalData = {
-        morph: morphValue
-    };
+        const additionalData = {
+            morph: morphValue
+        };
 
-    console.log("Submitting with flip value:", morphValue);
-    submitImageForm("http://127.0.0.1:5000/morph", additionalData);
+        console.log("Submitting with flip value:", morphValue);
+        submitImageForm("http://127.0.0.1:5000/morph", additionalData);
+    }
 });
 
 
@@ -351,24 +372,28 @@ spaces.addEventListener("click", async (event) => {
 
     if (!hasClickedOnce) {
         document.getElementById("spaces-b-l").classList.remove('hidden');
+        document.getElementById("applybtn").classList.remove('hidden');
+        document.getElementById("applybtn").classList.add('mt-5');
         document.getElementById("resize-w-h").classList.add('hidden');
         document.getElementById("flipping").classList.add('hidden');
         document.getElementById("adj-txt").classList.add('hidden');
         document.getElementById("rotate-a").classList.add('hidden');
+        document.getElementById("blur-img").classList.add('hidden');
         document.getElementById("translate-x-y").classList.add('hidden');
         document.getElementById("morphology-d-e").classList.add('hidden');
         hasClickedOnce = true;
-        return;
     }
 
-    const selectedRadio = document.querySelector('input[name="space"]:checked');
-    const spaceValue = selectedRadio ? selectedRadio.value : null;
+    currentSubmissionFunction = () => {
+        const selectedRadio = document.querySelector('input[name="space"]:checked');
+        const spaceValue = selectedRadio ? selectedRadio.value : null;
 
-    const additionalData = {
-        space: spaceValue
-    };
+        const additionalData = {
+            space: spaceValue
+        };
 
-    submitImageForm("http://127.0.0.1:5000/spaces", additionalData);
+        submitImageForm("http://127.0.0.1:5000/spaces", additionalData);
+    }
 });
 
 // TRANSLATE
@@ -386,30 +411,34 @@ translate.addEventListener("click", async (event) => {
 
     if (!hasClickedOnce) {
         document.getElementById("translate-x-y").classList.remove('hidden');
+        document.getElementById("applybtn").classList.remove('hidden');
+        document.getElementById("applybtn").classList.add('mt-5');
         document.getElementById("adj-txt").classList.add('hidden');
-        document.getElementById("resize-w-h").classList.addEventListener('hidden');
+        document.getElementById("blur-img").classList.add('hidden');
+        document.getElementById("resize-w-h").classList.add('hidden');
         document.getElementById("flipping").classList.add('hidden');
         document.getElementById("rotate-a").classList.add('hidden');
         document.getElementById("spaces-b-l").classList.add('hidden');
         document.getElementById("morphology-d-e").classList.add('hidden');
         hasClickedOnce = true;
-        return;
     }
 
-    const x = document.getElementById('x').value;
-    const y = document.getElementById('y').value;
+    currentSubmissionFunction = () => {
+        const x = document.getElementById('x').value;
+        const y = document.getElementById('y').value;
 
-    if (!x || !y) {
-        alert("Please specify both x and y");
-        return;
+        if (!x || !y) {
+            alert("Please specify both x and y");
+            return;
+        }
+
+        const additionalData = {
+            X: x,
+            Y: y
+        };
+
+        submitImageForm("http://127.0.0.1:5000/translate", additionalData);
     }
-
-    const additionalData = {
-        X: x,
-        Y: y
-    };
-
-    submitImageForm("http://127.0.0.1:5000/translate", additionalData);
 });
 
 
@@ -431,11 +460,11 @@ hist.addEventListener("click", async (event) => {
         document.getElementById("resize-w-h").classList.add('hidden');
         document.getElementById("adj-txt").classList.remove('hidden');
         document.getElementById("flipping").classList.add('hidden');
+        document.getElementById("blur-img").classList.add('hidden');
         document.getElementById("rotate-a").classList.add('hidden');
         document.getElementById("spaces-b-l").classList.add('hidden');
         document.getElementById("translate-x-y").classList.add('hidden');
         hasClickedOnce = true;
-        return;
     }
 
     submitImageForm("http://127.0.0.1:5000/histogram", null);

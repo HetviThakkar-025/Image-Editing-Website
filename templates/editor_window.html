@@ -57,8 +57,8 @@
                     id="spaces">Spaces</button>
             <button class="hover:bg-slate-700 text-sm font-semibold"><img src="/static/images/translate.png" alt=""
                     id="translate">Translate</button>
-            <button class="hover:bg-slate-700 text-sm font-semibold"><img src="/static/images/graph.png"
-                    alt="" id="graph">Graph</button>
+            <button class="hover:bg-slate-700 text-sm font-semibold"><img src="/static/images/graph.png" alt=""
+                    id="graph">Graph</button>
         </div>
 
         <!-- UPLOAD IMAGE -->
@@ -91,10 +91,11 @@
 
         <div class="flex flex-col justify-center items-center mb-30">
             <!-- ADJUSTMENTS -->
-            <div class="bg-slate-800 w-72 lg:h-64 rounded-2xl flex-col gap-y-4">
+            <div class="bg-slate-800 w-72 lg:h-72 rounded-2xl flex-col gap-y-4">
 
                 <p class="text-2xl text-gray-300 text-center font-bold mb-8 mt-6 underline">ADJUSTMENTS</p>
-                <p id="adj-txt" class="text-xl text-gray-600 font-bold mt-14 ml-12">USE ANY TOOL FOR ADJUSTMENTS</p>
+                <p id="adj-txt" class="text-xl text-gray-600 font-bold mt-16 ml-12">USE ANY TOOL FOR ADJUSTMENTS</p>
+
 
                 <!-- For resize -->
                 <div id="resize-w-h" class="flex flex-col text-white justify-center items-center gap-y-6 mb-5 hidden">
@@ -169,7 +170,7 @@
 
                 <!-- For spaces -->
                 <div id="spaces-b-l" class="flex flex-col text-white justify-center items-center gap-y-3 mb-5 hidden">
-                    <p class="font-semibold text-xl">How to convert your BGR image:</p>
+                    <p class="font-semibold text-xl ml-5">How to convert your BGR image:</p>
                     <div class="flex flex-row gap-x-6">
                         <div>
                             <input type="radio" name="space" id="hsv" value="hsv">
@@ -185,7 +186,7 @@
                 <!-- For translate -->
                 <div id="translate-x-y"
                     class="flex flex-col text-white justify-center items-center gap-y-3 mb-5 hidden">
-                    <p class="font-semibold text-xl">Enter x and y values to translate:</p>
+                    <p class="font-semibold text-xl ml-5">Enter x and y values to translate:</p>
                     <div class="flex flex-row gap-x-4">
                         <div>
                             X-axis: <input type="number" name="" id="x" class="bg-slate-600 w-14 rounded-md">
@@ -195,6 +196,9 @@
                         </div>
                     </div>
                 </div>
+
+                <button type="submit" id="applybtn"
+                    class="bg-teal-600 font-semibold px-3 py-1 ml-28 text-white rounded-lg hover:bg-teal-500 hidden">Apply</button>
             </div>
 
             <!-- RESET/EXPORT -->
