@@ -17,6 +17,58 @@ let hasClickedOnce = false;
 let currentSubmissionFunction = null;
 let currentAdditionalData = null;
 
+document.addEventListener("DOMContentLoaded", () => {
+    const dropArea = document.getElementById("drop-area");
+    const imageInput = document.getElementById("imageInput");
+    const previewContainer = document.getElementById("previewContainer");
+    const previewImage = document.getElementById("previewImage");
+
+    // Prevent default behavior for drag events
+    ["dragenter", "dragover", "dragleave", "drop"].forEach(event => {
+        dropArea.addEventListener(event, (e) => e.preventDefault());
+    });
+
+    // Highlight drop area on drag over
+    dropArea.addEventListener("dragover", () => {
+        dropArea.classList.add("border-blue-400", "bg-blue-600/20");
+    });
+
+    // Remove highlight when dragging leaves
+    dropArea.addEventListener("dragleave", () => {
+        dropArea.classList.remove("border-blue-400", "bg-blue-600/20");
+    });
+
+    // Handle file drop
+    dropArea.addEventListener("drop", (e) => {
+        dropArea.classList.remove("border-blue-400", "bg-blue-600/20");
+        const files = e.dataTransfer.files;
+        handleFiles(files);
+    });
+
+    // Handle file selection via input click
+    imageInput.addEventListener("change", () => handleFiles(imageInput.files));
+
+    // Process selected files
+    function handleFiles(files) {
+        if (files.length > 0) {
+            const file = files[0];
+
+            if (file.type.startsWith("image/")) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    previewContainer.classList.remove("hidden");
+                    previewImage.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            } else {
+                alert("Please upload an image file!");
+            }
+        }
+    }
+});
+
+
+
 // MAIN FUNCTION
 async function submitImageForm(endpoint, additionalData = {}) {
     const fileInput = document.getElementById("imageInput");
@@ -79,17 +131,19 @@ const reset = document.getElementById('resetbtn');
 
 reset.addEventListener('click', () => {
     const imageContainer = document.getElementById("previewContainer");
+    const previewImage = document.getElementById("previewImage");
     const resimageContainer = document.getElementById("resizedImageContainer");
     const fileInput = document.getElementById("imageInput");
 
-    // Clear the displayed images
-    imageContainer.innerHTML = "";
-    resimageContainer.innerHTML = "";
-    fileInput.value = "";
+    // Hide the preview container
+    imageContainer.classList.add("hidden");
+    resimageContainer.classList.add("hidden");
 
-    // Manually trigger a change event to ensure the file input resets
-    const event = new Event('change', { bubbles: true });
-    fileInput.dispatchEvent(event);
+    // Reset the image source instead of removing the element
+    previewImage.src = "";
+
+    // Reset the file input
+    fileInput.value = "";
 });
 
 // preview image
@@ -108,21 +162,6 @@ imageInput.addEventListener('change', (event) => {
         previewContainer.classList.add('hidden');
     }
 });
-
-// const reset = document.getElementById('resetbtn')
-
-// reset.addEventListener('click', (event) => {
-//     const imageContainer = document.getElementById("previewContainer");
-//     const resimageContainer = document.getElementById("resizedImageContainer");
-//     const fileInput = document.getElementById("imageInput");
-//     const file = fileInput.files[0];
-
-//     if (file) {
-//         imageContainer.innerHTML = "";
-//         resimageContainer.innerHTML = "";
-//         fileInput.value = "";
-//     }
-// });
 
 applybtn.addEventListener("click", () => {
     if (currentSubmissionFunction) {
