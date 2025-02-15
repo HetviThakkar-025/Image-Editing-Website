@@ -106,6 +106,7 @@ async function submitImageForm(endpoint, additionalData = {}) {
             const previewContainer = document.getElementById("previewContainer");
 
             const img = document.createElement("img");
+            img.id = "resizedImage";
             img.src = `data:image/jpeg;base64,${data.filtered_image}`;
             img.alt = "Processed Image";
             img.className = "max-w-full max-h-full object-contain";
@@ -123,6 +124,84 @@ async function submitImageForm(endpoint, additionalData = {}) {
         console.error("Error:", error);
         alert("An error occurred while processing the image.");
     }
+}
+
+// DOWNLOAD
+document.getElementById("export").addEventListener("click", async () => {
+    const resizedImage = document.getElementById("resizedImage");
+
+    if (!resizedImage || !resizedImage.src) {
+
+        alert("No processed image available to download.");
+        return;
+    }
+
+    const response = await fetch('/check_login'); // Check user session
+    const result = await response.json();
+
+    if (!result.logged_in) {
+
+        alert("Please log in to export the filtered image.");
+        return;
+    }
+
+
+    if (resizedImage.src.startsWith("data:image")) {
+        const base64Data = resizedImage.src.split(',')[1]; // Remove "data:image/jpeg;base64,"
+        const byteCharacters = atob(base64Data); // Decode base64
+        const byteNumbers = new Array(byteCharacters.length);
+        for (let i = 0; i < byteCharacters.length; i++) {
+            byteNumbers[i] = byteCharacters.charCodeAt(i);
+        }
+        const byteArray = new Uint8Array(byteNumbers);
+        const blob = new Blob([byteArray], { type: "image/png" });
+
+        // Create a download link for the blob
+        const blobUrl = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = blobUrl;
+        a.download = "filtered-image.png";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+
+        // Revoke Blob URL to free memory
+        URL.revokeObjectURL(blobUrl);
+    } else {
+        // If it's a normal image URL (not Base64)
+        const a = document.createElement("a");
+        a.href = resizedImage.src;
+        a.download = "filtered-image.png";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    }
+
+    // const a = document.createElement("a");
+    // a.href = resizedImage.src;
+    // a.download = "filtered-image.png"; // Change this for dynamic filenames
+    // document.body.appendChild(a);
+    // a.click();
+    // document.body.removeChild(a);
+});
+
+
+//LOGIN-SIGNUP
+login = document.getElementById("login-form")
+exportBtn = document.getElementById("export")
+loginBtn = document.getElementById("login-signup")
+
+// exportBtn.addEventListener("click", async (event) => {
+//     login.classList.remove('hidden');
+// });
+
+loginBtn.addEventListener("click", async (event) => {
+    login.classList.remove('hidden');
+});
+
+function closeModal() {
+    login.classList.add('hidden');
+    document.getElementById('successModal').style.display = 'none';
 }
 
 //RESET
@@ -510,47 +589,29 @@ hist.addEventListener("click", async (event) => {
 });
 
 
-//LOGIN-SIGNUP
-login = document.getElementById("login-form")
-exportBtn = document.getElementById("export")
-loginBtn = document.getElementById("login-signup")
-
 // exportBtn.addEventListener("click", async (event) => {
-//     login.classList.remove('hidden');
+//     const response = await fetch('/check_login'); // Check user session
+//     const result = await response.json();
+
+//     if (!result.logged_in) {
+
+//         alert("Please log in to export the filtered image.");
+//         return;
+//     }
+
+//     // Request server to save and return image
+
+//     const imgResponse = await fetch('/export_filtered_image');
+//     if (imgResponse.ok) {
+//         const blob = await imgResponse.blob();
+//         alert('ok')
+//         const link = document.createElement("a");
+//         link.href = URL.createObjectURL(blob);
+//         link.download = "filtered_image.png";
+//         document.body.appendChild(link);
+//         link.click();
+//         document.body.removeChild(link);
+//     } else {
+//         alert("Failed to export image.");
+//     }
 // });
-
-loginBtn.addEventListener("click", async (event) => {
-    login.classList.remove('hidden');
-});
-
-function closeModal() {
-    login.classList.add('hidden');
-    document.getElementById('successModal').style.display = 'none';
-}
-
-exportBtn.addEventListener("click", async (event) => {
-    const response = await fetch('/check_login'); // Check user session
-    const result = await response.json();
-
-    if (!result.logged_in) {
-
-        alert("Please log in to export the filtered image.");
-        return;
-    }
-
-    // Request server to save and return image
-
-    const imgResponse = await fetch('/export_filtered_image');
-    if (imgResponse.ok) {
-        const blob = await imgResponse.blob();
-        alert('ok')
-        const link = document.createElement("a");
-        link.href = URL.createObjectURL(blob);
-        link.download = "filtered_image.png";
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    } else {
-        alert("Failed to export image.");
-    }
-});
