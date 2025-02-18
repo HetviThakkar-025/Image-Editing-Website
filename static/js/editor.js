@@ -132,7 +132,7 @@ document.getElementById("export").addEventListener("click", async () => {
 
     if (!resizedImage || !resizedImage.src) {
 
-        alert("No processed image available to download.");
+        alert("No processed image available to download");
         return;
     }
 
@@ -147,8 +147,8 @@ document.getElementById("export").addEventListener("click", async () => {
 
 
     if (resizedImage.src.startsWith("data:image")) {
-        const base64Data = resizedImage.src.split(',')[1]; // Remove "data:image/jpeg;base64,"
-        const byteCharacters = atob(base64Data); // Decode base64
+        const base64Data = resizedImage.src.split(',')[1]; 
+        const byteCharacters = atob(base64Data);
         const byteNumbers = new Array(byteCharacters.length);
         for (let i = 0; i < byteCharacters.length; i++) {
             byteNumbers[i] = byteCharacters.charCodeAt(i);
@@ -156,7 +156,6 @@ document.getElementById("export").addEventListener("click", async () => {
         const byteArray = new Uint8Array(byteNumbers);
         const blob = new Blob([byteArray], { type: "image/png" });
 
-        // Create a download link for the blob
         const blobUrl = URL.createObjectURL(blob);
         const a = document.createElement("a");
         a.href = blobUrl;
@@ -165,7 +164,6 @@ document.getElementById("export").addEventListener("click", async () => {
         a.click();
         document.body.removeChild(a);
 
-        // Revoke Blob URL to free memory
         URL.revokeObjectURL(blobUrl);
     } else {
         // If it's a normal image URL (not Base64)
@@ -176,13 +174,6 @@ document.getElementById("export").addEventListener("click", async () => {
         a.click();
         document.body.removeChild(a);
     }
-
-    // const a = document.createElement("a");
-    // a.href = resizedImage.src;
-    // a.download = "filtered-image.png"; // Change this for dynamic filenames
-    // document.body.appendChild(a);
-    // a.click();
-    // document.body.removeChild(a);
 });
 
 
@@ -190,10 +181,6 @@ document.getElementById("export").addEventListener("click", async () => {
 login = document.getElementById("login-form")
 exportBtn = document.getElementById("export")
 loginBtn = document.getElementById("login-signup")
-
-// exportBtn.addEventListener("click", async (event) => {
-//     login.classList.remove('hidden');
-// });
 
 loginBtn.addEventListener("click", async (event) => {
     login.classList.remove('hidden');
@@ -204,8 +191,8 @@ function closeModal() {
     document.getElementById('successModal').style.display = 'none';
 }
 
-//RESET
 
+//RESET
 const reset = document.getElementById('resetbtn');
 
 reset.addEventListener('click', () => {

@@ -12,11 +12,9 @@ import matplotlib.pyplot as plt
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'users1234'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///images.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 CORS(app)
-
 
 class users(db.Model):
     sno = db.Column(db.Integer, primary_key=True)
@@ -24,14 +22,6 @@ class users(db.Model):
     password = db.Column(db.String(500), nullable=False)
     image_filename = db.Column(db.String(200))
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
-
-
-# class Image(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     filename = db.Column(db.String(200), nullable=False)
-#     user_id = db.Column(db.Integer, db.ForeignKey('users.sno'), nullable=False)
-#     uploaded_at = db.Column(db.DateTime, default=datetime.utcnow)
-#     user = db.relationship('users', backref=db.backref('images', lazy=True))
 
 
 @app.route("/signup", methods=['POST'])
@@ -73,55 +63,6 @@ def check_login():
 
     return jsonify({'logged_in': False})
 
-
-# @app.route('/export_filtered_image', methods=['GET'])
-# def export_filtered_image():
-
-#     # Ensure the user is logged in
-#     if 'username' not in session:
-#         return jsonify({'error': 'Unauthorized'}), 401
-
-#     # Ensure that there is a filtered image in the session
-#     if 'filtered_image' not in session:
-#         return jsonify({'error': 'No filtered image available'}), 400
-
-#     try:
-#         print('hiiiiii')
-#         # Retrieve the filtered image from the session (Base64)
-#         img_base64 = session['filtered_image']
-
-#         # Decode the Base64 image
-#         img_bytes = base64.b64decode(img_base64)
-
-#         # Get the user from the session
-#         user = users.query.filter_by(username=session['username']).first()
-#         if not user:
-#             return jsonify({'error': 'User not found'}), 404
-
-#         # Store the image in the database (with a unique filename)
-
-#         image_entry = Image(
-#             filename=f"{user.username}_filtered.png", user_id=user.sno)
-#         db.session.add(image_entry)
-#         db.session.commit()
-
-#         # Define the image path to save it for download
-#         image_path = os.path.join('static', 'filtered_images',
-#                                   f"{user.username}_filtered.png")
-
-#         # Make sure the directory exists
-#         os.makedirs(os.path.dirname(image_path), exist_ok=True)
-
-#         # Save the image to the file system
-#         with open(image_path, 'wb') as f:
-#             f.write(img_bytes)
-
-#         # Serve the image file for download
-#         return send_file(image_path, as_attachment=True, download_name=f"{user.username}_filtered.png")
-
-#     except Exception as e:
-#         print(f"Error during export: {e}")
-#         return jsonify({'error': 'An error occurred during export'}), 500
 
 
 # RESIZE
