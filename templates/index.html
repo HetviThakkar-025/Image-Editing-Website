@@ -19,6 +19,30 @@
         .glow {
             text-shadow: 0 3px #3d7bff, 0 0 3px #3d7bff, 0 0 7px #3d7bff, 0 0 5px #3d7bff;
         }
+
+        @keyframes scroll {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+
+        .scrolling-container {
+            display: flex;
+            gap: 1rem;
+            width: max-content;
+            animation: scroll 50s linear infinite;
+        }
+
+        /* To duplicate content for smooth looping */
+        .scroll-wrapper {
+            display: flex;
+            overflow: hidden;
+            white-space: nowrap;
+        }
     </style>
 </head>
 
@@ -275,6 +299,183 @@
         </div>
     </div>
 
+    <div class="max-w-full mx-auto mt-10">
+        <h2 class="text-4xl font-bold mb-6 text-white ml-5">Frequently Asked</h2>
+        <!-- Accordion Item 1 -->
+        <div class="border border-slate-800 rounded-lg mb-2">
+            <button class="w-full flex justify-between items-center p-4 bg-slate-700 text-white"
+                onclick="toggleAccordion(1)">
+                <span class="font-medium">What types of image formats can I edit?</span>
+                <span class="icon">+</span>
+            </button>
+            <div id="content-1" class="px-4 py-2 hidden text-cyan-300">
+                You can edit common image formats like JPEG and PNG. Support for additional formats may vary.
+            </div>
+        </div>
+
+        <!-- Accordion Item 2 -->
+        <div class="border border-slate-800 rounded-lg mb-2">
+            <button class="w-full flex justify-between items-center p-4 bg-slate-700 text-white"
+                onclick="toggleAccordion(2)">
+                <span class="font-medium">Can I resize my images using this tool?</span>
+                <span class="icon">+</span>
+            </button>
+            <div id="content-2" class="px-4 py-2 hidden text-cyan-300">
+                Yes! You can resize your images by entering custom dimensions.
+            </div>
+        </div>
+
+        <div class="border border-slate-800 rounded-lg mb-2">
+            <button class="w-full flex justify-between items-center p-4 bg-slate-700 text-white"
+                onclick="toggleAccordion(3)">
+                <span class="font-medium">How can I rotate an image?</span>
+                <span class="icon">+</span>
+            </button>
+            <div id="content-3" class="px-4 py-2 hidden text-cyan-300">
+                You can rotate an image by 90°, 180°, or 270° with a single click. We also allow custom rotation using a
+                slider for precise adjustments.
+            </div>
+        </div>
+
+        <div class="border border-slate-800 rounded-lg mb-2">
+            <button class="w-full flex justify-between items-center p-4 bg-slate-700 text-white"
+                onclick="toggleAccordion(4)">
+                <span class="font-medium">Does this tool support applying filters and effects?</span>
+                <span class="icon">+</span>
+            </button>
+            <div id="content-4" class="px-4 py-2 hidden text-cyan-300">
+                Absolutely! Choose from a variety of filters and effects like grayscale, dilating and eroding
+                to enhance your photos.
+            </div>
+        </div>
+
+        <div class="border border-slate-800 rounded-lg mb-2">
+            <button class="w-full flex justify-between items-center p-4 bg-slate-700 text-white"
+                onclick="toggleAccordion(5)">
+                <span class="font-medium">Do I need to install anything to use this editor?</span>
+                <span class="icon">+</span>
+            </button>
+            <div id="content-5" class="px-4 py-2 hidden text-cyan-300">
+                No installation is required! Our image editor runs entirely in your browser, so you can edit images
+                quickly without downloading software.
+            </div>
+        </div>
+
+        <div class="border border-slate-800 rounded-lg mb-2">
+            <button class="w-full flex justify-between items-center p-4 bg-slate-700 text-white"
+                onclick="toggleAccordion(6)">
+                <span class="font-medium">What does the "Translate" feature do?</span>
+                <span class="icon">+</span>
+            </button>
+            <div id="content-6" class="px-4 py-2 hidden text-cyan-300">
+                The Translate tool lets you move an image in any direction without resizing it. You can shift the image
+                left, right, up, or down within the canvas.
+            </div>
+        </div>
+
+        <div class="border border-slate-800 rounded-lg mb-2">
+            <button class="w-full flex justify-between items-center p-4 bg-slate-700 text-white"
+                onclick="toggleAccordion(7)">
+                <span class="font-medium">Can I extract the RGB values from an image?</span>
+                <span class="icon">+</span>
+            </button>
+            <div id="content-7" class="px-4 py-2 hidden text-cyan-300">
+                Yes! Our RGB Analyzer tool extracts the Red, Green, and Blue (RGB) values of pixels in your image.
+            </div>
+        </div>
+
+        <div class="border border-slate-800 rounded-lg mb-2">
+            <button class="w-full flex justify-between items-center p-4 bg-slate-700 text-white"
+                onclick="toggleAccordion(8)">
+                <span class="font-medium">How can I visualize the RGB values as a graph?</span>
+                <span class="icon">+</span>
+            </button>
+            <div id="content-8" class="px-4 py-2 hidden text-cyan-300">
+                When you upload an image, our tool generates an RGB histogram that displays the intensity of Red, Green,
+                and Blue colors across the image. This helps you analyze color distribution.
+            </div>
+        </div>
+    </div>
+
+
+    <div class="max-w-screen-xl mx-auto p-8 mt-10">
+        <h2 class="text-5xl font-bold text-center mb-6 text-blue-300">Customer Reviews</h2>
+
+        <!-- Masonry Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
+
+            <!-- Review Card 1 -->
+            <div class="bg-cyan-800 p-6 rounded-xl shadow-lg h-52">
+                <div class="flex">
+                    <span class="text-yellow-400">★★★★★</span>
+                </div>
+                <h3 class="font-bold mt-2">The Best Online Image Editor!</h3>
+                <p class="text-white text-sm mt-1">I was searching for a quick and easy way to edit my photos without
+                    downloading software. It's fast, user-friendly, and
+                    packed with amazing features!</p>
+                <p class="text-gray-300 text-sm italic mt-2">— Emily, Graphic Designer</p>
+            </div>
+
+            <!-- Review Card 2 (Taller) -->
+            <div class="bg-teal-800 p-6 rounded-xl shadow-lg h-64">
+                <div class="flex">
+                    <span class="text-yellow-400">★★★☆☆</span>
+                </div>
+                <h3 class="font-bold mt-2">A Game-Changer for My Work</h3>
+                <p class="text-white text-sm mt-1">As a content creator, I need a reliable editing tool, and this
+                    website delivers! The AI-powered features save me so much time, and the quality is top-notch
+                </p>
+                <p class="text-gray-300 text-sm italic mt-2">— Mark, Digital Marketer</p>
+            </div>
+
+            <!-- Review Card 3 (Wide) -->
+            <div class="bg-teal-800 p-6 rounded-xl shadow-lg h-48 sm:col-span-1 lg:col-span-2">
+                <div class="flex">
+                    <span class="text-yellow-400">★★★★☆</span>
+                </div>
+                <h3 class="font-bold mt-2">Editing Made Simple and Fun!</h3>
+                <p class="text-white text-sm mt-1">I'm not a professional designer, but this tool makes me feel like
+                    one! The interface is easy to use, and the results are stunning. Highly recommend it!</p>
+                <p class="text-gray-300 text-sm italic mt-2">— Sarah, Social Media Manager</p>
+            </div>
+
+            <!-- Review Card 4 -->
+            <div class="bg-cyan-800 p-6 rounded-xl shadow-lg h-56">
+                <div class="flex">
+                    <span class="text-yellow-400">★★★★★</span>
+                </div>
+                <h3 class="font-bold mt-2">So easy to use!</h3>
+                <p class="text-white text-sm mt-1">I’m not a tech-savvy person, but this editor makes photo editing so
+                    simple! The tools are straightforward, and I can edit my pictures in just a few clicks</p>
+                <p class="text-gray-300 text-sm italic mt-2">— Jason, Casual User</p>
+            </div>
+
+            <!-- Review Card 5 -->
+            <div class="bg-cyan-800 p-6 rounded-xl shadow-lg h-40">
+                <div class="flex">
+                    <span class="text-yellow-400">★★★★★</span>
+                </div>
+                <h3 class="font-bold mt-2">Fast and Hassle-Free</h3>
+                <p class="text-white text-sm mt-1">I love how quick and smooth this editor is! I can easily
+                    resize, and enhance my photos without lag.</p>
+                <p class="text-gray-300 text-sm italic mt-1">— Rachel, Student</p>
+            </div>
+
+            <!-- Review Card 6 (Extra Tall) -->
+            <div class="bg-teal-800 p-6 rounded-xl shadow-lg h-72 sm:col-span-2">
+                <div class="flex">
+                    <span class="text-yellow-400">★★★★☆</span>
+                </div>
+                <h3 class="font-bold mt-2">Amazing and Completely Free!</h3>
+                <p class="text-white text-sm mt-1">I was looking for a free online editor, and this is by far the best
+                    one! It has all the features I need without forcing me to pay. Highly recommended!</p>
+                <p class="text-gray-300 text-sm italic mt-2">— Anonymous</p>
+            </div>
+
+        </div>
+    </div>
+
+
     <footer class="mt-10 bg-gray-800 flex flex-col md:flex-row gap-x-44">
         <div class="mt-10 ml-5 md:ml-16">
             <p
@@ -350,6 +551,11 @@
         hamburger.addEventListener('click', () => {
             menu.classList.toggle('hidden'); // Toggles the visibility
         });
+
+        function toggleAccordion(id) {
+            const content = document.getElementById(`content-${id}`);
+            content.classList.toggle("hidden");
+        }
     </script>
 
 </body>
